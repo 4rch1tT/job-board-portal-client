@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,10 +12,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const formSchema = z
   .object({
-    fullName: z.string().min(5, {
+    name: z.string().min(5, {
       message: "Username must be at least 5 characters.",
     }),
     email: z.string().email({
@@ -45,7 +46,7 @@ const formSchema = z
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Password do not match",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
@@ -53,13 +54,36 @@ export function Register() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = () => {};
+  const api_domain = import.meta.env.VITE_API_DOMAIN;
+  const navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    try {
+      await axios
+        .post(`${api_domain}/api/candidate/register`, {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        },
+      {withCredentials: true})
+        .then((res) => {
+          console.log(res.data);
+          navigate("/")
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  };
 
   return (
     <div className="grid grid-cols-12 grid-rows-12 gap-8 bg-[#f5f4fa] pt-8">
@@ -76,7 +100,7 @@ export function Register() {
           >
             <FormField
               control={form.control}
-              name="fullName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Full name</FormLabel>
@@ -125,6 +149,7 @@ export function Register() {
                       placeholder="(Minimum 8 characters)"
                       {...field}
                       className="w-[600px]"
+                      type="password"
                     />
                   </FormControl>
                   <FormDescription>
@@ -145,6 +170,7 @@ export function Register() {
                       placeholder="Retype the password"
                       {...field}
                       className="w-[600px]"
+                      type="password"
                     />
                   </FormControl>
                   <FormDescription></FormDescription>
