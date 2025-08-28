@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import CandidateLayout from "./layouts/CandidateLayout";
 import { Register } from "./pages/Register";
+import { Login } from "./pages/Login";
+import useAuthCheck from "./hooks/useAuthCheck";
 
 const router = createBrowserRouter([
   {
@@ -14,13 +16,18 @@ const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <Register/>
-      }
+        element: <Register />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
     ],
   },
 ]);
 
 function App() {
+  useAuthCheck();
   return <RouterProvider router={router} />;
 }
 

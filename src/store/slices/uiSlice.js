@@ -5,5 +5,14 @@ const initialState = {
 };
 
 export const uiSlice = createSlice({
-  
-})
+  name: "isRegisterPage",
+  initialState,
+  reducers: {
+    updateIsRegisterPage: (state) => {
+      state.value = true;
+    },
+  },
+});
+
+export const { updateIsRegisterPage } = uiSlice.actions;
+export default uiSlice.reducer;

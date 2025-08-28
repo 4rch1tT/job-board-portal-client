@@ -1,6 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/slices/authSlice";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,8 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const formSchema = z
   .object({
@@ -63,25 +66,25 @@ export function Register() {
 
   const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (values) => {
     try {
-      await axios
-        .post(`${api_domain}/api/candidate/register`, {
+      const res = await axios.post(
+        `${api_domain}/api/candidate/register`,
+        {
           name: values.name,
           email: values.email,
           password: values.password,
         },
-      {withCredentials: true})
-        .then((res) => {
-          console.log(res.data);
-          navigate("/")
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
+        { withCredentials: true }
+      );
+
+      console.log(res.data);
+      dispatch(login({ name: values.name }));
+      navigate("/");
     } catch (error) {
-      console.log("Something went wrong", error);
+      console.log("Register failed", error.response?.data);
     }
   };
 
@@ -132,7 +135,7 @@ export function Register() {
                     />
                   </FormControl>
                   <FormDescription>
-                    We'll send relevent jobs and updates to this email
+                    We'll send relevant jobs and updates to this email
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
