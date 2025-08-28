@@ -1,13 +1,20 @@
 import React from "react";
 import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import logo from "@/assets/images/seeker-logo-black.svg"
 
 const Footer = () => {
-  return (
-    <footer>
+  const location = useLocation()
+
+  const isAuthPage = location.pathname === "/register" || location.pathname==="/login"
+
+  return isAuthPage 
+      ? null
+      :( <footer>
       <div className="px-16 py-8 flex justify-center gap-32">
         <div>
           <img
-            src="../src/assets/images/seeker-logo-black.svg"
+            src={logo}
             alt="seeker logo"
             className="h-10"
           />
@@ -47,8 +54,7 @@ const Footer = () => {
       <div className="p-4">
         <p className="text-center">Copyright &copy; 2025 Seeker</p>
       </div>
-    </footer>
-  );
-};
+    </footer>)
+}
 
 export default Footer;

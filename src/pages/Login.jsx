@@ -93,43 +93,48 @@ export function Login() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email ID</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Email ID" {...field} />
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
-            </FormItem>
+    <div className="min-h-screen bg-[#f5f4fa]">
+      <div>
+        <div></div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email ID</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Email ID" {...field} />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Password" {...field} />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {form.formState.errors.root && (
+            <p className="text-red-500 text-sm">
+              {form.formState.errors.root.message}
+            </p>
           )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Password" {...field} />
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {form.formState.errors.root && (
-          <p className="text-red-500 text-sm">
-            {form.formState.errors.root.message}
-          </p>
-        )}
-        <Button type="submit">Login</Button>
-      </form>
-    </Form>
+          <Button type="submit">Login</Button>
+        </form>
+      </Form>
+      </div>
+    </div>
   );
 }

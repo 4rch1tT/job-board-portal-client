@@ -13,7 +13,7 @@ const Navbar = () => {
   const isRegisterPage = location.pathname === "/register";
 
   return (
-    <div className="flex justify-between items-center mx-16 h-20 ">
+    <div className="flex justify-between items-center mx-32 h-20 ">
       <div>
         <img
           src={logo}
@@ -35,7 +35,18 @@ const Navbar = () => {
           Already registered? Login
         </Link>
       ) : (
-        <Button onClick={() => navigate("/register")}>Register</Button>
+        <div>
+          <Button
+            variant="outline"
+            className="mr-4 rounded-2xl hover:border hover:border-black"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </Button>
+          <Button className="rounded-2xl" onClick={() => navigate("/register")}>
+            Register
+          </Button>
+        </div>
       )}
     </div>
   );
