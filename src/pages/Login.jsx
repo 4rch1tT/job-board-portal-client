@@ -93,47 +93,52 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f4fa]">
-      <div>
-        <div></div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email ID</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Email ID" {...field} />
-                </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Password" {...field} />
-                </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {form.formState.errors.root && (
-            <p className="text-red-500 text-sm">
-              {form.formState.errors.root.message}
-            </p>
-          )}
-          <Button type="submit">Login</Button>
-        </form>
-      </Form>
+    <div className="min-h-screen bg-[#f5f4fa] pt-16">
+      <div className="grid grid-cols-12 grid-rows-12">
+        <div className="col-span-4 row-span-4 col-start-3 row-start-3 bg-white"></div>
+        <div className="col-span-4 row-span-7 col-start-7 row-start-1 p-10  bg-white">
+          <h2 className="mb-8 text-2xl">Login</h2>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email ID</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Email ID" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Password" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {form.formState.errors.root && (
+                <p className="text-red-500 text-sm">
+                  {form.formState.errors.root.message}
+                </p>
+              )}
+              <Button type="submit" className="min-w-full">
+                Login
+              </Button>
+            </form>
+          </Form>
+        </div>
       </div>
     </div>
   );
