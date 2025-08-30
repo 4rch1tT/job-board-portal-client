@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import registerSVG from "../assets/images/register.svg";
 
 const formSchema = z
   .object({
@@ -89,9 +90,12 @@ export function Register() {
   };
 
   return (
-    <div className="grid grid-cols-12 grid-rows-12 gap-8 bg-[#f5f4fa] pt-8">
-      <div className="col-span-4 row-span-5 border-2  flex ml-24 bg-white rounded-lg"></div>
-      <div className="col-span-8 row-span-8 col-start-5 border-2 p-8 mr-24 rounded-lg bg-white">
+    <div className="grid grid-cols-12 grid-rows-12 gap-8 pt-8">
+      <div className="col-span-4 row-span-5 border-2 border-[#b3ee6d] flex flex-col ml-24 rounded-lg">
+        <img src={registerSVG} alt="register" className="h-60 w-full" />
+        div
+      </div>
+      <div className="col-span-8 row-span-8 col-start-5 border-2 border-[#b3ee6d] p-16 mr-24 rounded-lg">
         <div className="mb-8">
           <h2 className="text-2xl font-bold">Create your Seeker profile</h2>
           <p>For seekers from 'Seeker'</p>
@@ -99,7 +103,7 @@ export function Register() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 w-[600px] h-auto "
+            className="space-y-8 h-auto tracking-tight "
           >
             <FormField
               control={form.control}
@@ -111,7 +115,7 @@ export function Register() {
                     <Input
                       placeholder="What is your name?"
                       {...field}
-                      className="w-[600px]"
+                      className="w-full mt-3"
                     />
                   </FormControl>
                   <FormDescription>
@@ -131,7 +135,7 @@ export function Register() {
                     <Input
                       placeholder="Tell us your Email ID"
                       {...field}
-                      className="w-[600px]"
+                      className="w-full mt-3"
                     />
                   </FormControl>
                   <FormDescription>
@@ -151,7 +155,7 @@ export function Register() {
                     <Input
                       placeholder="(Minimum 8 characters)"
                       {...field}
-                      className="w-[600px]"
+                      className="w-full mt-3"
                       type="password"
                     />
                   </FormControl>
@@ -172,7 +176,7 @@ export function Register() {
                     <Input
                       placeholder="Retype the password"
                       {...field}
-                      className="w-[600px]"
+                      className="w-full mt-3"
                       type="password"
                     />
                   </FormControl>

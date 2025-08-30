@@ -31,19 +31,25 @@ const Navbar = () => {
           </Avatar>
         </div>
       ) : isRegisterPage ? (
-        <Link to="/login" className="hover:underline">
-          Already registered? Login
-        </Link>
+        <p className="text-[#3c3c3c] text-lg tracking-tight">
+          Already registered?
+          <Link to="/login" className="hover:text-[#b3ee6d] ml-0.5">
+            Login
+          </Link>
+        </p>
       ) : (
         <div>
           <Button
             variant="outline"
-            className="mr-4 rounded-2xl hover:border hover:border-black"
+            className="mr-4 rounded-2xl hover:bg-[#b3ee6d] border-2 border-[#b3ee6d] font-semibold"
             onClick={() => navigate("/login")}
           >
             Login
           </Button>
-          <Button className="rounded-2xl" onClick={() => navigate("/register")}>
+          <Button
+            className="rounded-2xl bg-[#3c3c3c]"
+            onClick={() => navigate("/register")}
+          >
             Register
           </Button>
         </div>

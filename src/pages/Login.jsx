@@ -93,10 +93,10 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f4fa] pt-16">
+    <div className="min-h-screen pt-16">
       <div className="grid grid-cols-12 grid-rows-12">
-        <div className="col-span-4 row-span-4 col-start-3 row-start-3 bg-white"></div>
-        <div className="col-span-4 row-span-7 col-start-7 row-start-1 p-10  bg-white">
+        <div className="col-span-4 row-span-4 col-start-3 row-start-3  border-1 border-[#b3ee6d] rounded-lg"></div>
+        <div className="col-span-4 row-span-7 col-start-7 row-start-1 p-16 py-10    tracking-tight border-1 border-[#b3ee6d] rounded-lg">
           <h2 className="mb-8 text-2xl">Login</h2>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
@@ -107,7 +107,11 @@ export function Login() {
                   <FormItem>
                     <FormLabel>Email ID</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Email ID" {...field} />
+                      <Input
+                        placeholder="Enter Email ID"
+                        {...field}
+                        className="mt-4"
+                      />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -121,7 +125,11 @@ export function Login() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Password" {...field} />
+                      <Input
+                        placeholder="Enter Password"
+                        {...field}
+                        className="mt-4"
+                      />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -133,7 +141,7 @@ export function Login() {
                   {form.formState.errors.root.message}
                 </p>
               )}
-              <Button type="submit" className="min-w-full">
+              <Button type="submit" className="min-w-full bg-[#3c3c3c]">
                 Login
               </Button>
             </form>
