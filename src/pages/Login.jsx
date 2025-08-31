@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/store/slices/authSlice";
+import loginSVG from "../assets/images/team-brainstorming.svg";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -93,24 +94,28 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen pt-16">
-      <div className="grid grid-cols-12 grid-rows-12">
-        <div className="col-span-4 row-span-4 col-start-3 row-start-3  border-1 border-[#b3ee6d] rounded-lg"></div>
-        <div className="col-span-4 row-span-7 col-start-7 row-start-1 p-16 py-10    tracking-tight border-1 border-[#b3ee6d] rounded-lg">
-          <h2 className="mb-8 text-2xl">Login</h2>
+    <div className="min-h-screen">
+      <div className="grid grid-cols-9 grid-rows-8">
+        <div className="col-span-3 row-span-8 tracking-tight  text-[#3c3c3c] h-screen bg-[#b3ee6d] p-8 flex flex-col justify-evenly">
+          <h2 className="mb-8 text-3xl font-semibold">
+            Login and start making your career with your dream companies
+          </h2>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 tracking-tight"
+            >
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email ID</FormLabel>
+                    <FormLabel className="text-lg">Your Email ID</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter Email ID"
+                        placeholder=""
                         {...field}
-                        className="mt-4"
+                        className="border-t-0 border-l-0 border-r-0 border-b-1 border-[#3c3c3c] rounded-none focus-visible:ring-0"
                       />
                     </FormControl>
                     <FormDescription></FormDescription>
@@ -123,12 +128,12 @@ export function Login() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-lg">Password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter Password"
+                        placeholder=""
                         {...field}
-                        className="mt-4"
+                        className="border-t-0 border-l-0 border-r-0 border-b-1 border-[#3c3c3c] rounded-none focus-visible:ring-0"
                       />
                     </FormControl>
                     <FormDescription></FormDescription>
@@ -141,11 +146,20 @@ export function Login() {
                   {form.formState.errors.root.message}
                 </p>
               )}
-              <Button type="submit" className="min-w-full bg-[#3c3c3c]">
-                Login
+              <Button
+                type="submit"
+                className="min-w-full bg-[#3c3c3c] p-8 text-lg font-semibold"
+              >
+                Login Now
               </Button>
             </form>
           </Form>
+          <p className="text-xl tracking-tight text-center">
+            New user? <Link className="font-bold underline">Register</Link>
+          </p>
+        </div>
+        <div className="col-span-5 row-span-8 col-start-5 rounded-lg flex justify-center items-center">
+          <img src={loginSVG} alt="login" className="h-[600px]" />
         </div>
       </div>
     </div>

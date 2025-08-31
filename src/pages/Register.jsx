@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import registerSVG from "../assets/images/register.svg";
+import { CheckCircle2 } from "lucide-react";
 
 const formSchema = z
   .object({
@@ -90,15 +91,33 @@ export function Register() {
   };
 
   return (
-    <div className="grid grid-cols-12 grid-rows-12 gap-8 pt-8">
-      <div className="col-span-4 row-span-5 border-2 border-[#b3ee6d] flex flex-col ml-24 rounded-lg">
+    <div className="grid grid-cols-10 grid-rows-9 gap-8 pt-8 text-[#3c3c3c]">
+      <div className="col-span-4 row-span-4 shadow-md  shadow-[#b3ee6d] flex flex-col ml-24 rounded-lg py-4 ">
         <img src={registerSVG} alt="register" className="h-60 w-full" />
-        div
+        <div className="tracking-tight flex flex-col justify-center items-center">
+          <p className="text-center text-2xl mb-4 font-semibold">
+            On registering, you can
+          </p>
+          <div className="">
+            <div className="flex  mb-1.5 text-lg">
+              <CheckCircle2 fill="#b3ee6d" className=" text-white" />
+              <p>Build your profile and recruiters find you</p>
+            </div>
+            <div className="flex  mb-1.5 text-lg">
+              <CheckCircle2 fill="#b3ee6d" className=" text-white" />
+              <p>Get real time job updates</p>
+            </div>
+            <div className="flex  mb-2 text-lg">
+              <CheckCircle2 fill="#b3ee6d" className=" text-white" />
+              <p>Find a job and grow your career</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="col-span-8 row-span-8 col-start-5 border-2 border-[#b3ee6d] p-16 mr-24 rounded-lg">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold">Create your Seeker profile</h2>
-          <p>For seekers from 'Seeker'</p>
+      <div className="col-span-8 row-span-7 col-start-5 shadow-md shadow-[#b3ee6d] p-16 mr-24 rounded-lg">
+        <div className="mb-8 tracking-tight">
+          <h2 className="text-3xl font-bold">Create your Seeker profile</h2>
+          <p className="text-xl">For seekers from 'Seeker'</p>
         </div>
         <Form {...form}>
           <form
@@ -110,15 +129,15 @@ export function Register() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full name</FormLabel>
+                  <FormLabel className="text-md">Full name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="What is your name?"
                       {...field}
-                      className="w-full mt-3"
+                      className="w-full mt-3 text-md"
                     />
                   </FormControl>
-                  <FormDescription>
+                  <FormDescription className="text-md">
                     This is your public display name
                   </FormDescription>
                   <FormMessage />
@@ -130,7 +149,7 @@ export function Register() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email ID</FormLabel>
+                  <FormLabel className="text-md">Email ID</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Tell us your Email ID"
@@ -150,7 +169,7 @@ export function Register() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-md">Password</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="(Minimum 8 characters)"
@@ -171,7 +190,7 @@ export function Register() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm password</FormLabel>
+                  <FormLabel className="text-md">Confirm password</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Retype the password"
@@ -185,7 +204,7 @@ export function Register() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="py-5">
+            <Button type="submit" className="py-5 bg-[#3c3c3c]">
               Register now
             </Button>
           </form>

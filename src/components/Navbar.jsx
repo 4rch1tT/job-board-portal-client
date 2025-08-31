@@ -33,7 +33,7 @@ const Navbar = () => {
       ) : isRegisterPage ? (
         <p className="text-[#3c3c3c] text-lg tracking-tight">
           Already registered?
-          <Link to="/login" className="hover:text-[#b3ee6d] ml-0.5">
+          <Link to="/login" className="text-[#b3ee6d] ml-0.5 font-semibold">
             Login
           </Link>
         </p>
