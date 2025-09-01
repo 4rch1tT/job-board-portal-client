@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/store/slices/authSlice";
-import loginSVG from "../assets/images/team-brainstorming.svg";
+import loginSVG from "@/assets/images/team-brainstorming.svg";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -69,7 +69,7 @@ export function Login() {
         { withCredentials: true }
       );
       console.log(res.data);
-      dispatch(login({ name: values.name }));
+      dispatch(login(res.data.candidate));
       navigate("/");
     } catch (error) {
       console.log("Login failed", error.response?.data);
@@ -94,7 +94,7 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-muted">
       <div className="grid grid-cols-9 grid-rows-8">
         <div className="col-span-3 row-span-8 tracking-tight  text-[#3c3c3c] h-screen bg-[#b3ee6d] p-8 flex flex-col justify-evenly">
           <h2 className="mb-8 text-3xl font-semibold">
@@ -155,7 +155,10 @@ export function Login() {
             </form>
           </Form>
           <p className="text-xl tracking-tight text-center">
-            New user? <Link className="font-bold underline">Register</Link>
+            New user?{" "}
+            <Link to="/register" className="font-bold underline">
+              Register
+            </Link>
           </p>
         </div>
         <div className="col-span-5 row-span-8 col-start-5 rounded-lg flex justify-center items-center">

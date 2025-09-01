@@ -6,7 +6,7 @@ import JobCard from "@/components/JobCard";
 
 const Home = () => {
   return (
-    <div className=" pt-16 flex flex-col min-h-screen">
+    <div className=" pt-16 flex flex-col min-h-screen bg-muted">
       <div className="flex flex-col justify-center items-center text-[#3c3c3c]">
         <h1 className="text-5xl tracking-tight font-bold ">
           Find Your Next Oppertunity

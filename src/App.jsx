@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/candidate/Home";
 import CandidateLayout from "./layouts/CandidateLayout";
-import { Register } from "./pages/Register";
-import { Login } from "./pages/Login";
+import { Register } from "./pages/candidate/Register";
+import { Login } from "./pages/candidate/Login";
 import useAuthCheck from "./hooks/useAuthCheck";
+import Profile from "./pages/candidate/Profile";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      {
+        path: "profile",
+        element: <Profile/>
+      }
     ],
   },
 ]);
