@@ -99,15 +99,15 @@ export function Register() {
             On registering, you can
           </p>
           <div className="">
-            <div className="flex mb-1.5 text-xl">
+            <div className="flex items-center mb-1.5 text-xl">
               <CheckCircle2 fill="#b3ee6d" className=" text-white" />
               <p>Build your profile and recruiters find you</p>
             </div>
-            <div className="flex mb-1.5 text-xl">
+            <div className="flex items-center mb-1.5 text-xl">
               <CheckCircle2 fill="#b3ee6d" className=" text-white" />
               <p>Get real time job updates</p>
             </div>
-            <div className="flex mb-2 text-xl">
+            <div className="flex items-center mb-2 text-xl">
               <CheckCircle2 fill="#b3ee6d" className=" text-white" />
               <p>Find a job and grow your career</p>
             </div>

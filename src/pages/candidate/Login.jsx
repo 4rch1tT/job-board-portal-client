@@ -115,7 +115,7 @@ export function Login() {
                       <Input
                         placeholder=""
                         {...field}
-                        className="border-t-0 border-l-0 border-r-0 border-b-1 border-[#3c3c3c] rounded-none focus-visible:ring-0"
+                        className="border-t-0 border-l-0 border-r-0 border-b-1 border-[#3c3c3c] rounded-none focus-visible:ring-0 focus-visible:bg-[#b3ee6d]"
                       />
                     </FormControl>
                     <FormDescription></FormDescription>
