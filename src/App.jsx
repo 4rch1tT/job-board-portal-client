@@ -6,6 +6,7 @@ import { Login } from "./pages/candidate/Login";
 import useAuthCheck from "./hooks/useAuthCheck";
 import { ToastContainer } from "react-toastify";
 import UpdateProfile from "./pages/candidate/UpdateProfile";
+import Profile from "./pages/candidate/Profile";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "profile",
+        element: <Profile/>
       },
       {
         path: "update-profile",
