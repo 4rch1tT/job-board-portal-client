@@ -29,51 +29,92 @@ const UpdateProfile = () => {
     confirmPassword: "",
   });
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const handleUploadProfilePic = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profile_pic", file);
+
+    try {
+      const res = await axios.post(
+        `${api_domain}/api/candidate/upload-profile-pic`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {},
+        }
+      );
+
+      dispatch(updateUser(res.data.candidate));
+      toast.success(res.data.message || "Profile picture updated!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Upload failed");
+    }
+  };
+
   const handleSubmit = async () => {
-    setError("");
-    setSuccess("");
-
-    // if (!formData.name) {
-    //   setError("Name is required");
-    // }
-
-    // if(!formData.email){
-    //   setError("Email is required")
-    // }
-
-    if (
-      formData.newPassword &&
-      formData.newPassword !== formData.confirmPassword
-    ) {
-      setError("Password do not match");
+    if (!formData.name) {
+      toast.error("Name is required");
+      return;
+    }
+    if (!formData.email) {
+      toast.error("Email is required");
       return;
     }
 
+    const isChangingPassword =
+      formData.currentPassword ||
+      formData.newPassword ||
+      formData.confirmPassword;
+
+    if (isChangingPassword) {
+      if (!formData.currentPassword) {
+        toast.error("Current password is required to change your password");
+        return;
+      }
+      if (!formData.newPassword) {
+        toast.error("New password is required");
+        return;
+      }
+      if (!formData.confirmPassword) {
+        toast.error("Please confirm your new password");
+        return;
+      }
+      if (formData.newPassword !== formData.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+    }
     try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        ...(isChangingPassword && {
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+          confirmPassword: formData.confirmPassword,
+        }),
+      };
       const res = await axios.put(
         `${api_domain}/api/candidate/profile`,
-        formData,
+        payload,
         { withCredentials: true }
       );
 
-      setSuccess(res.data.message);
-
       dispatch(updateUser(res.data.candidate));
-      toast.success(res.data.message);
+
+      toast.success(res.data.message || "Profile updated successfully");
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
 
     setFormData({
-      name: "",
-      email: "",
+      ...formData,
       currentPassword: "",
       newPassword: "",
       confirmPassword: "",
@@ -103,10 +144,21 @@ const UpdateProfile = () => {
               <AvatarImage src={user?.profilePic} alt="Profile Picture" />
               <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
             </Avatar>
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => document.getElementById("profilePicInput").click()}
+            >
               <UploadIcon className="mr-2 h-4 w-4" />
               Change Photo
             </Button>
+            <input
+              type="file"
+              id="profilePicInput"
+              accept="image/*"
+              className="hidden"
+              onChange={handleUploadProfilePic}
+            />
           </div>
 
           <div className="grid gap-2">
