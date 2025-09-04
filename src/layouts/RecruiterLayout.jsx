@@ -1,8 +1,15 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Navbar from '@/components/recruiter/Navbar'
+import Footer from '@/components/recruiter/Footer'
 
 const RecruiterLayout = () => {
   return (
-    <div>RecruiterLayout</div>
+    <>
+      <Navbar/>
+      <Outlet/>
+      <Footer/>
+    </>
   )
 }
 

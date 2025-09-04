@@ -1,12 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/candidate/Home";
+
 import CandidateLayout from "./layouts/CandidateLayout";
+
+// * Candidate pages
+import Home from "./pages/candidate/Home";
 import { Register } from "./pages/candidate/Register";
 import { Login } from "./pages/candidate/Login";
-import useAuthCheck from "./hooks/useAuthCheck";
-import { ToastContainer } from "react-toastify";
-import UpdateProfile from "./pages/candidate/UpdateProfile";
 import Profile from "./pages/candidate/Profile";
+import UpdateProfile from "./pages/candidate/UpdateProfile";
+
+import RecruiterLayout from "./layouts/RecruiterLayout";
+
+// * Recruiter pages
+import RecruiterHome from "./pages/recruiter/RecruiterHome";
+import RecruiterLogin from "./pages/recruiter/RecruiterLogin";
+import RecruiterRegister from "./pages/recruiter/RecruiterRegister";
+
+import useAuthCheck from "./hooks/useAuthCheck";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -27,11 +39,25 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <Profile/>
+        element: <Profile />,
       },
       {
         path: "update-profile",
         element: <UpdateProfile />,
+      },
+    ],
+  },
+  {
+    path: "/recruiter",
+    element: <RecruiterLayout />,
+    children: [
+      {
+        path: "",
+        element: <RecruiterHome />,
+      },
+      {
+        path: "login",
+        element: <RecruiterLogin />,
       },
     ],
   },
@@ -40,9 +66,9 @@ const router = createBrowserRouter([
 function App() {
   useAuthCheck();
   return (
-      <>
+    <>
       <RouterProvider router={router} />
-      <ToastContainer /> 
+      <ToastContainer />
     </>
   );
 }
