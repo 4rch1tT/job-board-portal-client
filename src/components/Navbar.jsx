@@ -92,7 +92,7 @@ const Navbar = () => {
             >
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="size-8 rounded-lg">
+                  <Avatar className="rounded-lg">
                     <AvatarImage
                       src={user?.profilePic}
                       alt={user?.name || "User"}

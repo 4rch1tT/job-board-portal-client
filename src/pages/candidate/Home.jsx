@@ -34,7 +34,7 @@ const Home = () => {
           <Button className="rounded-2xl bg-[#3c3c3c] px-8 py-3">Search</Button>
         </div>
       </div>
-      <JobCard/>
+      <JobCard />
     </div>
   );
 };
