@@ -12,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Switch } from "../ui/switch";
 import logo from "@/assets/images/seeker-logo-black.svg";
 import {
   BadgeCheckIcon,
@@ -20,16 +19,14 @@ import {
   ChevronDown,
   LogOutIcon,
   BookmarkIcon,
-  Moon,
-  Sun,
   CircleCheckBig,
 } from "lucide-react";
 import axios from "axios";
 import { logout } from "@/store/slices/authSlice";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
   const { value, user } = useSelector((state) => state.isAuthenticated);
   const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
@@ -63,15 +60,7 @@ const Navbar = () => {
         />
       </div>
       <div className="flex gap-4">
-        <div className="flex items-center space-x-3">
-          <Sun className="size-4" />
-          <Switch
-            checked={checked}
-            onCheckedChange={(value) => setChecked(value)}
-            aria-label="Toggle theme"
-          />
-          <Moon className="size-4" />
-        </div>
+        <ThemeToggle />
         {value ? (
           <div className="flex gap-4 items-center">
             <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -162,7 +151,9 @@ const Navbar = () => {
                 Register
               </Button>
             </div>
-            <Link to="/recruiter/login" className="-tracking-tight">Recruiter login</Link>
+            <Link to="/recruiter/login" className="-tracking-tight">
+              Recruiter login
+            </Link>
           </div>
         )}
       </div>
