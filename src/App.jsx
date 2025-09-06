@@ -13,8 +13,8 @@ import RecruiterLayout from "./layouts/RecruiterLayout";
 
 // * Recruiter pages
 import RecruiterHome from "./pages/recruiter/RecruiterHome";
-import RecruiterLogin from "./pages/recruiter/RecruiterLogin";
-import RecruiterRegister from "./pages/recruiter/RecruiterRegister";
+import { RecruiterLogin } from "./pages/recruiter/RecruiterLogin";
+import { RecruiterRegister } from "./pages/recruiter/RecruiterRegister";
 
 import useAuthCheck from "./hooks/useAuthCheck";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <RecruiterHome />,
+      },
+      {
+        path: "register",
+        element: <RecruiterRegister />,
       },
       {
         path: "login",
