@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "@/store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
-const UpdateProfile = () => {
+const RecruiterUpdateProfile = () => {
   const { user } = useSelector((state) => state.isAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -131,7 +131,7 @@ const UpdateProfile = () => {
       newPassword: "",
       confirmPassword: "",
     });
-    navigate("/profile");
+    navigate("/recruiter/profile");
   };
 
   return (
@@ -242,4 +242,4 @@ function UploadIcon(props) {
   );
 }
 
-export default UpdateProfile;
+export default RecruiterUpdateProfile;

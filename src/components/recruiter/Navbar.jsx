@@ -66,7 +66,7 @@ const Navbar = () => {
             <ThemeToggle />
             <p className="text-[#3c3c3c] text-lg tracking-tight">
               Already registered?
-              <Link to="/login" className="text-[#b3ee6d] ml-0.5 font-semibold">
+              <Link to="/recruiter/login" className="text-[#b3ee6d] ml-0.5 font-semibold">
                 Login
               </Link>
             </p>
@@ -125,13 +125,13 @@ const Navbar = () => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={() => navigate("")}>
+                    <DropdownMenuItem onClick={() => navigate("/recruiter/profile")}>
                       <UserRound />
                       Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Briefcase />
-                      Jobs
+                      Post Job
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />

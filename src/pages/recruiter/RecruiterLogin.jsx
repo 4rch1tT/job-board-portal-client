@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/store/slices/authSlice";
-import loginSVG from "@/assets/images/team-brainstorming.svg";
+import loginSVG from "@/assets/images/searching.svg";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -98,7 +98,7 @@ export function RecruiterLogin() {
       <div className="grid grid-cols-9 grid-rows-8">
         <div className="col-span-3 row-span-8 tracking-tight  text-[#3c3c3c] h-screen bg-[#b3ee6d] p-8 flex flex-col justify-evenly">
           <h2 className="mb-8 text-3xl font-semibold">
-            Login and start making your career with your dream companies
+            Login and find the right candidates
           </h2>
           <Form {...form}>
             <form
@@ -156,7 +156,7 @@ export function RecruiterLogin() {
           </Form>
           <p className="text-xl tracking-tight text-center">
             New user?{" "}
-            <Link to="/register" className="font-bold underline">
+            <Link to="/recruiter/register" className="font-bold underline">
               Register
             </Link>
           </p>

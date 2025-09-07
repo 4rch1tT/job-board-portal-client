@@ -15,10 +15,12 @@ import RecruiterLayout from "./layouts/RecruiterLayout";
 import RecruiterHome from "./pages/recruiter/RecruiterHome";
 import { RecruiterLogin } from "./pages/recruiter/RecruiterLogin";
 import { RecruiterRegister } from "./pages/recruiter/RecruiterRegister";
+import RecruiterProfile from "./pages/recruiter/RecruiterProfile";
 
 import useAuthCheck from "./hooks/useAuthCheck";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import RecruiterUpdateProfile from "./pages/recruiter/RecruiterUpdateProfile";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,14 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <RecruiterLogin />,
+      },
+      {
+        path: "profile",
+        element: <RecruiterProfile />,
+      },
+      {
+        path: "update-profile",
+        element: <RecruiterUpdateProfile />,
       },
     ],
   },
