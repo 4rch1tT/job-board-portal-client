@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -31,6 +32,10 @@ const PostJob = () => {
       <form>
         <Input placeholder="Job Title" {...register("title")} />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
+        <Textarea placeholder="Job description" {...register("description")} />
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
+        )}
       </form>
     </div>
   );
