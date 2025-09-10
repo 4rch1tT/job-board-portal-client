@@ -68,7 +68,13 @@ export function RecruiterLogin() {
         },
         { withCredentials: true }
       );
-      console.log(res.data);
+      if (res.data.recruiter.role !== "recruiter") {
+      form.setError("root", {
+        type: "manual",
+        message: "Only recruiters can log in here.",
+      });
+      return;
+    }
       dispatch(login(res.data.recruiter));
       navigate("/recruiter");
     } catch (error) {

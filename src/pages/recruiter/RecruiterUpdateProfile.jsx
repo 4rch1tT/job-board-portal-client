@@ -44,7 +44,7 @@ const RecruiterUpdateProfile = () => {
 
     try {
       const res = await axios.post(
-        `${api_domain}/api/candidate/upload-profile-pic`,
+        `${api_domain}/api/recruiter/upload-profile-pic`,
         formData,
         {
           withCredentials: true,
@@ -52,7 +52,7 @@ const RecruiterUpdateProfile = () => {
         }
       );
 
-      dispatch(updateUser(res.data.candidate));
+      dispatch(updateUser(res.data.recruiter));
       toast.success(res.data.message || "Profile picture updated!");
     } catch (error) {
       toast.error(error.response?.data?.message || "Upload failed");
@@ -103,12 +103,12 @@ const RecruiterUpdateProfile = () => {
         }),
       };
       const res = await axios.put(
-        `${api_domain}/api/candidate/profile`,
+        `${api_domain}/api/recruiter/profile`,
         payload,
         { withCredentials: true }
       );
 
-      dispatch(updateUser(res.data.candidate));
+      dispatch(updateUser(res.data.recruiter));
 
       toast.success(res.data.message || "Profile updated successfully");
     } catch (error) {

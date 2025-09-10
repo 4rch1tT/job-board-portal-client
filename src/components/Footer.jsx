@@ -6,7 +6,7 @@ import logo from "@/assets/images/seeker-logo-black.svg"
 const Footer = () => {
   const location = useLocation()
 
-  const isAuthPage = location.pathname === "/register" || location.pathname==="/login"
+  const isAuthPage = location.pathname === "/recruiter/register" || location.pathname==="/recruiter/login" || location.pathname === "/register" || location.pathname==="/login"
 
   return isAuthPage 
       ? null

@@ -1,44 +1,75 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import z from "zod";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { jobCategories, jobLocations, jobTypes } from "@/constants/jobEnums";
 
-const schema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
-  location: z.string().min(1, { message: "Select location" }),
-  company: z.string().min(1, { message: "Select or Add a new Company" }),
-  requirements: z.string().min(1, { message: "Requirements are required" }),
-});
+export default function PostJob() {
+  const { register, handleSubmit, setValue } = useForm();
 
-const PostJob = () => {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      location: "",
-      company: "",
-      requirements: "",
-    },
-    resolver: zodResolver(schema),
-  });
+  const onSubmit = (data) => {};
+
   return (
-    <div>
-      <h1 className="text-5xl sm:text-7xl text-center pb-8">Post a Job</h1>
-      <form>
-        <Input placeholder="Job Title" {...register("title")} />
-        {errors.title && <p className="text-red-500">{errors.title.message}</p>}
-        <Textarea placeholder="Job description" {...register("description")} />
-        {errors.description && (
-          <p className="text-red-500">{errors.description.message}</p>
-        )}
-      </form>
+    <div className="min-h-screen bg-muted flex flex-col justify-center items-center ">
+      <h1 className="text-center mb-8 text-4xl">Post Job</h1>
+      <div className="border-2 p-8 rounded-2xl w-[800px]">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <Input {...register("title")} placeholder="Job Title" />
+          <Textarea
+            {...register("description")}
+            placeholder="Job Description"
+          />
+
+          <Select onValueChange={(val) => setValue("location", val)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Location" />
+            </SelectTrigger>
+            <SelectContent>
+              {jobLocations.map((loc) => (
+                <SelectItem key={loc.value} value={loc.value}>
+                  {loc.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={(val) => setValue("category", val)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              {jobCategories.map((cat) => (
+                <SelectItem key={cat.value} value={cat.value}>
+                  {cat.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={(val) => setValue("type", val)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Job type" />
+            </SelectTrigger>
+            <SelectContent>
+              {jobTypes.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Input {...register("salary")} type="number" placeholder="Salary" />
+          <Button type="submit">Post Job</Button>
+        </form>
+      </div>
     </div>
   );
-};
-
-export default PostJob;
+}

@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { SearchIcon, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import JobCard from "@/components/candidate/JobCard";
+import JobCard from "@/components/JobCard";
 
 const Home = () => {
   return (

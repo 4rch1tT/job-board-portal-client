@@ -68,7 +68,13 @@ export function Login() {
         },
         { withCredentials: true }
       );
-      console.log(res.data);
+      if (res.data.candidate.role !== "candidate") {
+        form.setError("root", {
+          type: "manual",
+          message: "Only candidates can log in here.",
+        });
+        return;
+      }
       dispatch(login(res.data.candidate));
       navigate("/");
     } catch (error) {
