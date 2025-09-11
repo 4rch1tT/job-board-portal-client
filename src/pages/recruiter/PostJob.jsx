@@ -17,24 +17,74 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function PostJob() {
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
   const api_domain = import.meta.env.VITE_API_DOMAIN;
+
   const [companies, setCompanies] = useState([]);
   const [showAddCompany, setShowAddCompany] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const selectedCompany = watch("company");
 
   useEffect(() => {
     axios
-      .get(`${api_domain}/api/company/approved`)
+      .get(`${api_domain}/api/company/approved`, { withCredentials: true })
       .then((res) => setCompanies(res.data.companies))
-      .catch((err) => console.error(err));
+      .catch((e) => {
+        console.log(e);
+        toast.error("Failed to load companies");
+      });
   }, []);
 
+  const handleCompanyLink = async (companyName) => {
+    try {
+      const res = await axios.patch(
+        `${api_domain}/api/company/link`,
+        { name: companyName },
+        { withCredentials: true }
+      );
+      toast.success(res.data.message);
+      setValue("company", res.data.company._id);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to link company");
+    }
+  };
+
   const onSubmit = async (data) => {
+    if (!data.company) {
+      toast.error("Please select or create a company first");
+      return;
+    }
+
+    if (
+      typeof data.salary.min !== "number" ||
+      typeof data.salary.max !== "number"
+    ) {
+      toast.error("Please enter both minimum and maximum salary");
+      return;
+    }
+
     if (data.salary.min > data.salary.max) {
       toast.error("Minimum salary cannot exceed maximum salary");
       return;
     }
-    await axios.post(`${api_domain}/api/job/`, data);
+
+    setIsSubmitting(true);
+    try {
+      await axios.post(`${api_domain}/api/job/`, data, {
+        withCredentials: true,
+      });
+      toast.success("Job posted successfully!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Job posting failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -47,14 +97,21 @@ export default function PostJob() {
           <h2 className="text-center mb-8 text-2xl font-semibold">Post Job</h2>
           <div className="space-y-2">
             <Label htmlFor="title">Job Title</Label>
-            <Input {...register("title")} placeholder="Job Title" />
+            <Input
+              {...register("title", { required: true })}
+              placeholder="Job Title"
+            />
+            {errors.title && <p className="text-red-500">Title is required</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Job Description</Label>
             <Textarea
-              {...register("description")}
+              {...register("description", { required: true })}
               placeholder="Job Description"
             />
+            {errors.description && (
+              <p className="text-red-500">Description is required</p>
+            )}
           </div>
           <div className="flex gap-4">
             <div>
@@ -89,7 +146,7 @@ export default function PostJob() {
             </div>
             <div>
               <Label className="mb-2">Type</Label>
-              <Select onValueChange={(val) => setValue("type", val)}>
+              <Select onValueChange={(val) => setValue("jobType", val)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Job type" />
                 </SelectTrigger>
@@ -106,13 +163,13 @@ export default function PostJob() {
           <div>
             <Label className="mb-2">Company</Label>
             {companies.length > 0 && (
-              <Select onValueChange={(val) => setValue("company", val)}>
+              <Select onValueChange={handleCompanyLink}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select company" />
                 </SelectTrigger>
                 <SelectContent>
                   {companies.map((comp) => (
-                    <SelectItem key={comp._id} value={comp._id}>
+                    <SelectItem key={comp._id} value={comp.name}>
                       {comp.name}
                     </SelectItem>
                   ))}
@@ -139,18 +196,19 @@ export default function PostJob() {
             </div>
           </div>
 
-          <Button type="submit">Post Job</Button>
-
-          {showAddCompany && (
-            <AddCompanyModal
-              onClose={() => setShowAddCompany(false)}
-              onSuccess={(newCompany) => {
-                setCompanies((prev) => [...prev, newCompany]);
-                setValue("company", newCompany._id);
-              }}
-            />
-          )}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Posting..." : "Post Job"}
+          </Button>
         </form>
+        {showAddCompany && (
+          <AddCompanyModal
+            onClose={() => setShowAddCompany(false)}
+            onSuccess={(newCompany) => {
+              setCompanies((prev) => [...prev, newCompany]);
+              setValue("company", newCompany._id);
+            }}
+          />
+        )}
       </div>
     </div>
   );
