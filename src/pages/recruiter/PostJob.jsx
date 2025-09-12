@@ -34,18 +34,23 @@ export default function PostJob() {
   useEffect(() => {
     axios
       .get(`${api_domain}/api/company/approved`, { withCredentials: true })
-      .then((res) => setCompanies(res.data.companies))
+      .then((res) => {
+        console.log("Approved companies:", res.data.companies);
+        setCompanies(res.data.companies);
+      })
       .catch((e) => {
         console.log(e);
         toast.error("Failed to load companies");
       });
   }, []);
 
-  const handleCompanyLink = async (companyName) => {
+//TODO update the handlCompanyLink ///////////
+
+  const handleCompanyLink = async (companyId) => {
     try {
       const res = await axios.patch(
         `${api_domain}/api/company/link`,
-        { name: companyName },
+        { companyId },
         { withCredentials: true }
       );
       toast.success(res.data.message);
@@ -169,7 +174,7 @@ export default function PostJob() {
                 </SelectTrigger>
                 <SelectContent>
                   {companies.map((comp) => (
-                    <SelectItem key={comp._id} value={comp.name}>
+                    <SelectItem key={comp._id} value={comp._id}>
                       {comp.name}
                     </SelectItem>
                   ))}
