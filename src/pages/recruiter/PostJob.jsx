@@ -35,7 +35,6 @@ export default function PostJob() {
     axios
       .get(`${api_domain}/api/company/approved`, { withCredentials: true })
       .then((res) => {
-        console.log("Approved companies:", res.data.companies);
         setCompanies(res.data.companies);
       })
       .catch((e) => {
@@ -44,9 +43,8 @@ export default function PostJob() {
       });
   }, []);
 
-//TODO update the handlCompanyLink ///////////
 
-  const handleCompanyLink = async (companyId) => {
+  const handleCompanySelection = async (companyId) => {
     try {
       const res = await axios.patch(
         `${api_domain}/api/company/link`,
@@ -56,6 +54,7 @@ export default function PostJob() {
       toast.success(res.data.message);
       setValue("company", res.data.company._id);
     } catch (error) {
+      console.error("Company linking error:", error);
       toast.error(error.response?.data?.message || "Failed to link company");
     }
   };
@@ -168,7 +167,7 @@ export default function PostJob() {
           <div>
             <Label className="mb-2">Company</Label>
             {companies.length > 0 && (
-              <Select onValueChange={handleCompanyLink}>
+              <Select onValueChange={handleCompanySelection}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select company" />
                 </SelectTrigger>
@@ -181,9 +180,21 @@ export default function PostJob() {
                 </SelectContent>
               </Select>
             )}
-            <Button variant="outline" onClick={() => setShowAddCompany(true)}>
-              + Add Company
-            </Button>
+            <div className="mt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowAddCompany(true)}
+              >
+                + Create New Company
+              </Button>
+            </div>
+
+            {selectedCompany && (
+              <p className="text-sm text-green-600 mt-2">
+                ✓ Linked to company successfully
+              </p>
+            )}
           </div>
           <div>
             <Label className="mb-2">Salary Range</Label>
@@ -211,6 +222,8 @@ export default function PostJob() {
             onSuccess={(newCompany) => {
               setCompanies((prev) => [...prev, newCompany]);
               setValue("company", newCompany._id);
+              toast.success("Company created and selected successfully!");
+              setShowAddCompany(false);
             }}
           />
         )}
