@@ -8,7 +8,7 @@ import {
 } from "./ui/dropdown-menu";
 import {
   UserRound, Briefcase, BookmarkIcon, CircleCheckBig,
-  LogOutIcon,
+  LogOutIcon, ClipboardCheck, UserRoundPlus
 } from "lucide-react";
 import axios from "axios";
 import logo from "@/assets/images/seeker-logo-black.svg";
@@ -95,6 +95,12 @@ const Navbar = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate("/recruiter/post-job")}>
                       <Briefcase /> Post Job
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/recruiter/manage-jobs")}>
+                      <ClipboardCheck /> Manage Jobs
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/recruiter/view-applications")}>
+                      <UserRoundPlus /> View Applications
                     </DropdownMenuItem>
                   </>
                 ) : (

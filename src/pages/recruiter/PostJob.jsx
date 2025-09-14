@@ -23,7 +23,14 @@ export default function PostJob() {
     setValue,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      location: "",
+      category: "",
+      jobType: "",
+      company: "",
+    },
+  });
   const api_domain = import.meta.env.VITE_API_DOMAIN;
 
   const [companies, setCompanies] = useState([]);
@@ -32,17 +39,21 @@ export default function PostJob() {
   const selectedCompany = watch("company");
 
   useEffect(() => {
-    axios
-      .get(`${api_domain}/api/company/approved`, { withCredentials: true })
-      .then((res) => {
-        setCompanies(res.data.companies);
-      })
-      .catch((e) => {
-        console.log(e);
+    const fetchCompanies = async () => {
+      try {
+        await axios
+          .get(`${api_domain}/api/company/approved`, { withCredentials: true })
+          .then((res) => {
+            setCompanies(res.data.companies || []);
+          });
+      } catch (error) {
+        console.error("Failed to fetch companies:", error);
         toast.error("Failed to load companies");
-      });
+        setCompanies([]);
+      }
+    };
+    fetchCompanies();
   }, []);
-
 
   const handleCompanySelection = async (companyId) => {
     try {
@@ -60,11 +71,25 @@ export default function PostJob() {
   };
 
   const onSubmit = async (data) => {
+    if (!data.location) {
+      toast.error("Please select a location");
+      return;
+    }
+
+    if (!data.category) {
+      toast.error("Please select a category");
+      return;
+    }
+
+    if (!data.jobType) {
+      toast.error("Please select a job type");
+      return;
+    }
+
     if (!data.company) {
       toast.error("Please select or create a company first");
       return;
     }
-
     if (
       typeof data.salary.min !== "number" ||
       typeof data.salary.max !== "number"
@@ -132,6 +157,9 @@ export default function PostJob() {
                   ))}
                 </SelectContent>
               </Select>
+              {errors.location && (
+                <p className="text-red-500">Location is required</p>
+              )}
             </div>
             <div>
               <Label className="mb-2">Category</Label>
@@ -147,6 +175,9 @@ export default function PostJob() {
                   ))}
                 </SelectContent>
               </Select>
+              {errors.location && (
+                <p className="text-red-500">Category is required</p>
+              )}
             </div>
             <div>
               <Label className="mb-2">Type</Label>
@@ -162,6 +193,9 @@ export default function PostJob() {
                   ))}
                 </SelectContent>
               </Select>
+              {errors.location && (
+                <p className="text-red-500">Type is required</p>
+              )}
             </div>
           </div>
           <div>

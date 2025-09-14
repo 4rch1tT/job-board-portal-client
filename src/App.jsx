@@ -11,7 +11,6 @@ import { Login } from "./pages/candidate/Login";
 import Profile from "./pages/candidate/Profile";
 import UpdateProfile from "./pages/candidate/UpdateProfile";
 
-
 // * Recruiter pages
 import RecruiterHome from "./pages/recruiter/RecruiterHome";
 import { RecruiterLogin } from "./pages/recruiter/RecruiterLogin";
@@ -23,6 +22,8 @@ import PostJob from "./pages/recruiter/PostJob";
 import useAuthCheck from "./hooks/useAuthCheck";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import ManageJobs from "./pages/recruiter/ManageJobs";
+import ViewApplications from "./pages/recruiter/ViewApplications";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <DynamicHome/>,
+        element: <DynamicHome />,
       },
       {
         path: "register",
@@ -77,8 +78,16 @@ const router = createBrowserRouter([
       },
       {
         path: "post-job",
-        element : <PostJob/> 
-      }
+        element: <PostJob />,
+      },
+      {
+        path: "manage-jobs",
+        element: <ManageJobs />,
+      },
+      {
+        path: "view-applications",
+        element: <ViewApplications />,
+      },
     ],
   },
 ]);
