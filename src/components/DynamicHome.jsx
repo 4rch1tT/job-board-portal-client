@@ -11,7 +11,6 @@ const DynamicHome = () => {
     return <Navigate to="/recruiter" replace />;
   }
 
- 
   return <Home />;
 };
 

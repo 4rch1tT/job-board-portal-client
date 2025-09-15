@@ -38,7 +38,8 @@ export const jobLocations = [
   { value: "Kochi", label: "Kochi" },
   { value: "Thiruvananthapuram", label: "Thiruvananthapuram" },
   { value: "Trichy", label: "Trichy" },
-  { value: "Goa", label: "Goa" }
+  { value: "Goa", label: "Goa" },
+  { value: "Remote", label: "Remote"}
 ];
 
 export const jobCategories = [
