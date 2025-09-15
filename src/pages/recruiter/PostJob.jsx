@@ -286,7 +286,7 @@ export default function PostJob() {
               )}
             </div>
             <div>
-              <Label className="text-sm font-medium text-gray-700">
+              <Label className="text-sm font-medium text-gray-700 mb-2">
                 Salary Range
                 <span className="text-red-500 ml-1">*</span>
               </Label>

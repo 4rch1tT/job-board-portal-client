@@ -63,8 +63,7 @@ const ManageJobs = () => {
   }, [searchTerm, jobs]);
 
   const handleEdit = async (jobId) => {};
-  
-// !!!! NOT AUTHORIZED ERROR WORK ON IT !!!!
+
   const handleDelete = async (jobId) => {
     if (
       !window.confirm(
@@ -76,9 +75,13 @@ const ManageJobs = () => {
 
     setDeleteLoading(jobId);
     try {
-      await axios.put(`${api_domain}/api/job/${jobId}/soft-delete`, {
-        withCredentials: true,
-      });
+      await axios.put(
+        `${api_domain}/api/job/${jobId}/soft-delete`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
       const updatedJobs = jobs.filter((job) => job._id !== jobId);
       setJobs(updatedJobs);
@@ -86,7 +89,7 @@ const ManageJobs = () => {
 
       toast.success("Job deleted successfully");
     } catch (error) {
-      console.error("Failed to delete job:", error);
+      console.error("Error response:", error.response?.data);
       toast.error(error.response?.data?.message || "Failed to delete job");
     } finally {
       setDeleteLoading(null);
@@ -94,7 +97,7 @@ const ManageJobs = () => {
   };
 
   const handleViewApplications = (jobId) => {
-    navigate(`/recruiter/job/${jobId}/applications`);
+    navigate(`/recruiter/view-applications/${jobId}`);
   };
 
   const formatSalary = (salary) => {

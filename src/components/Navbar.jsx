@@ -3,12 +3,22 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuGroup,
-  DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import {
-  UserRound, Briefcase, BookmarkIcon, CircleCheckBig,
-  LogOutIcon, ClipboardCheck, UserRoundPlus
+  UserRound,
+  Briefcase,
+  BookmarkIcon,
+  CircleCheckBig,
+  LogOutIcon,
+  ClipboardCheck,
+  UserRoundPlus,
 } from "lucide-react";
 import axios from "axios";
 import logo from "@/assets/images/seeker-logo-black.svg";
@@ -24,7 +34,8 @@ const Navbar = () => {
 
   const isRecruiter = user?.role === "recruiter";
   const isRegisterPage =
-    location.pathname === "/register" || location.pathname === "/recruiter/register";
+    location.pathname === "/register" ||
+    location.pathname === "/recruiter/register";
   const isLoginPage =
     location.pathname === "/login" || location.pathname === "/recruiter/login";
 
@@ -72,7 +83,10 @@ const Navbar = () => {
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5">
                   <Avatar className="rounded-lg">
-                    <AvatarImage src={user?.profilePic} alt={user?.name || "User"} />
+                    <AvatarImage
+                      src={user?.profilePic}
+                      alt={user?.name || "User"}
+                    />
                     <AvatarFallback className="rounded-lg">
                       {user?.name?.[0] || "U"}
                     </AvatarFallback>
@@ -90,17 +104,20 @@ const Navbar = () => {
               <DropdownMenuGroup>
                 {isRecruiter ? (
                   <>
-                    <DropdownMenuItem onClick={() => navigate("/recruiter/profile")}>
+                    <DropdownMenuItem
+                      onClick={() => navigate("/recruiter/profile")}
+                    >
                       <UserRound /> Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/recruiter/post-job")}>
+                    <DropdownMenuItem
+                      onClick={() => navigate("/recruiter/post-job")}
+                    >
                       <Briefcase /> Post Job
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/recruiter/manage-jobs")}>
+                    <DropdownMenuItem
+                      onClick={() => navigate("/recruiter/manage-jobs")}
+                    >
                       <ClipboardCheck /> Manage Jobs
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/recruiter/view-applications")}>
-                      <UserRoundPlus /> View Applications
                     </DropdownMenuItem>
                   </>
                 ) : (
@@ -119,7 +136,10 @@ const Navbar = () => {
               </DropdownMenuGroup>
 
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600!" onClick={handleLogout}>
+              <DropdownMenuItem
+                className="text-red-600!"
+                onClick={handleLogout}
+              >
                 <LogOutIcon /> Log out
               </DropdownMenuItem>
             </DropdownMenuContent>

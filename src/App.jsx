@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         element: <ManageJobs />,
       },
       {
-        path: "view-applications",
+        path: "view-applications/:jobId",
         element: <ViewApplications />,
       },
     ],
