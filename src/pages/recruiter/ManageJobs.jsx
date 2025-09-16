@@ -62,7 +62,9 @@ const ManageJobs = () => {
     }
   }, [searchTerm, jobs]);
 
-  const handleEdit = async (jobId) => {};
+  const handleEdit = async (jobId) => {
+    navigate(`/recruiter/post-job?edit=${jobId}`);
+  };
 
   const handleDelete = async (jobId) => {
     if (

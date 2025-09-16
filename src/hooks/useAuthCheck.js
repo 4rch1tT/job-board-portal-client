@@ -15,7 +15,13 @@ const useAuthCheck = () => {
         });
         dispatch(login(res.data));
       } catch (error) {
-        dispatch(logout());
+        try {
+          const res = await axios.get(`${api_domain}/api/recruiter/profile`);
+
+          dispatch(login(res.data));
+        } catch (error) {
+          dispatch(logout());
+        }
       }
     };
     checkAuth();
