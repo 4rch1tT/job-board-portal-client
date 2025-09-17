@@ -24,6 +24,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ManageJobs from "./pages/recruiter/ManageJobs";
 import ViewApplications from "./pages/recruiter/ViewApplications";
+import Jobs from "./pages/candidate/Jobs";
+import JobDetails from "./pages/candidate/JobDetails";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
         path: "update-profile",
         element: <UpdateProfile />,
       },
+      {
+        path: "jobs",
+        element: <Jobs />,
+      },
+      {
+        path: "job-details/:jobId",
+        element: <JobDetails />
+      }
     ],
   },
   {

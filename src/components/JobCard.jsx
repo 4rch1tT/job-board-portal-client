@@ -27,7 +27,10 @@ const JobCard = ({
   onViewDetails,
   onToggleWishlist,
   isInWishlist = false,
+  className = "",
 }) => {
+  if (!job) return null;
+
   const formatSalary = (salary) => {
     if (!salary || (!salary.min && !salary.max)) return "Salary not disclosed";
     const { min, max, currency = "₹" } = salary;
@@ -87,7 +90,7 @@ const JobCard = ({
   return (
     <>
       <Card
-        className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-0 shadow-sm hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50/30"
+        className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-0 shadow-sm hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50/30 ${className}`}
         onClick={handleViewDetails}
       >
         <CardHeader className="pb-4">
@@ -98,14 +101,14 @@ const JobCard = ({
                   src={job.company?.logoUrl}
                   alt={job.company?.name || "Company"}
                 />
-                <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+                <AvatarFallback className="bg-gradient-to-br from-[#b3ee6d] to-[rgb(109,152,43)] text-white font-semibold">
                   {(job.company?.name || job.company || "C")
                     .charAt(0)
                     .toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-1 group-hover:text-[#6d982b] transition-colors">
                   {job.title}
                 </CardTitle>
                 <CardDescription className="flex items-center text-sm text-gray-600 mt-1">
@@ -142,7 +145,6 @@ const JobCard = ({
             </div>
 
             <div className="flex items-center text-gray-600">
-              <DollarSign className="h-4 w-4 mr-2 flex-shrink-0" />
               <span className="truncate">{formatSalary(job.salary)}</span>
             </div>
 
@@ -216,11 +218,10 @@ const JobCard = ({
             <Button
               size="sm"
               onClick={handleApply}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
+              className="flex-1 bg-gradient-to-r from-[#b3ee6d] to-[#6d982b] hover:from-[#b2ef67] hover:to-[#577d1d] text-white border-0"
             >
               Apply Now
             </Button>
-            
           </div>
         </CardFooter>
       </Card>
