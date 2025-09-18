@@ -125,7 +125,7 @@ const Navbar = () => {
                     <DropdownMenuItem onClick={() => navigate("/profile")}>
                       <UserRound /> Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={()=>navigate("/wishlist")}>
                       <BookmarkIcon /> Wishlist
                     </DropdownMenuItem>
                     <DropdownMenuItem>

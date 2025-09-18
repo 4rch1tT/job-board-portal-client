@@ -14,14 +14,14 @@ export const toggleWishlist = createAsyncThunk(
       if (isInWishlist) {
         await axios.put(
           `${api_domain}/api/candidate/wishlist/${jobId}`,
-          { jobId },
+          {},
           { withCredentials: true }
         );
         dispatch(removeFromWishlist(jobId));
       } else {
         await axios.post(
           `${api_domain}/api/candidate/wishlist/${jobId}`,
-          { jobId },
+          {},
           { withCredentials: true }
         );
         dispatch(addToWishlist(jobId));

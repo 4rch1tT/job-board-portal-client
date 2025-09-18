@@ -9,7 +9,7 @@ const wishlistSlice = createSlice({
       if (!state.includes(action.payload)) state.push(action.payload);
     },
     removeFromWishlist: (state, action) => {
-      return state.filter((id) => id !== action.payload);
+      return state.filter(job => job._id !== action.payload);
     },
     clearWishlist: () => [],
   },
