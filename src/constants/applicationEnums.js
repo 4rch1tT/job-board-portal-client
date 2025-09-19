@@ -1,8 +1,7 @@
 export const applicatonStatus = [
-  "applied",
-  "withdrawn",
-  "in review",
-  "shortlisted",
+  "pending",
+  "reviewed",
+  "accepted",
   "rejected",
-  "hired",
+  "withdrawn",
 ];

@@ -9,6 +9,8 @@ import {
   ArrowLeft,
   DollarSign,
   Clock,
+  CheckCircle,
+  XCircle,
 } from "lucide-react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -21,6 +23,7 @@ const ViewApplications = () => {
   const [applications, setApplications] = useState([]);
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [updatingStatus, setUpdatingStatus] = useState(null); // Track which application is being updated
 
   const fetchApplications = async (jobId) => {
     try {
@@ -49,6 +52,57 @@ const ViewApplications = () => {
     }
   };
 
+  const updateApplicationStatus = async (applicationId, newStatus) => {
+    try {
+      setUpdatingStatus(applicationId);
+
+      console.log(
+        "Updating application:",
+        applicationId,
+        "to status:",
+        newStatus
+      );
+      console.log(
+        "API URL:",
+        `${api_domain}/api/application/${applicationId}/status`
+      );
+
+      const response = await axios.put(
+        `${api_domain}/api/application/${applicationId}/status`,
+        { status: newStatus },
+        { withCredentials: true }
+      );
+
+      console.log("Update response:", response.data);
+
+      // Update the local state to reflect the change
+      setApplications((prevApplications) =>
+        prevApplications.map((app) =>
+          app._id === applicationId ? { ...app, status: newStatus } : app
+        )
+      );
+
+      console.log("Status updated successfully");
+    } catch (error) {
+      console.error("Failed to update application status", error);
+      console.error("Error response:", error.response?.data);
+      console.error("Error status:", error.response?.status);
+
+      // More specific error messages
+      if (error.response?.status === 403) {
+        alert("You don't have permission to update this application.");
+      } else if (error.response?.status === 404) {
+        alert("Application not found.");
+      } else if (error.response?.status === 500) {
+        alert("Server error. Please try again later.");
+      } else {
+        alert("Failed to update status. Please try again.");
+      }
+    } finally {
+      setUpdatingStatus(null);
+    }
+  };
+
   useEffect(() => {
     if (jobId) {
       fetchApplications(jobId);
@@ -74,76 +128,32 @@ const ViewApplications = () => {
     return "Not specified";
   };
 
-  const handleDownloadResume = async (resumeUrl, candidateName, fileName) => {
-    if (!resumeUrl) {
+  const handleDownloadResume = (resumeUrl, candidateName) => {
+    if (resumeUrl) {
+      const link = document.createElement("a");
+      link.href = resumeUrl;
+      link.download = `${candidateName.replace(/\s+/g, "_")}_resume.pdf`;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
       console.log("Resume not available");
-      return;
     }
+  };
 
-    try {
-      const downloadFile = async (url, filename) => {
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            headers: {
-              Accept:
-                "application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, */*",
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const blob = await response.blob();
-          const blobUrl = window.URL.createObjectURL(blob);
-
-          const link = document.createElement("a");
-          link.href = blobUrl;
-          link.download = filename;
-          link.style.display = "none";
-
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-
-          window.URL.revokeObjectURL(blobUrl);
-        } catch (error) {
-          console.error("Download failed:", error);
-          window.open(url, "_blank");
-        }
-      };
-
-      let extension = "pdf"; 
-      if (fileName) {
-        const ext = fileName.split(".").pop()?.toLowerCase();
-        if (["pdf", "doc", "docx"].includes(ext)) {
-          extension = ext;
-        }
-      } else {
-        const urlParts = resumeUrl.split(".");
-        const urlExt = urlParts[urlParts.length - 1]?.toLowerCase();
-        if (["pdf", "doc", "docx"].includes(urlExt)) {
-          extension = urlExt;
-        }
-      }
-
-      const cleanName =
-        candidateName?.replace(/[^a-zA-Z0-9]/g, "_") || "candidate";
-      const downloadFilename = `${cleanName}_resume.${extension}`;
-
-      let downloadUrl = resumeUrl;
-      if (resumeUrl.includes("cloudinary.com")) {
-        if (!resumeUrl.includes("fl_attachment")) {
-          const separator = resumeUrl.includes("?") ? "&" : "?";
-          downloadUrl = `${resumeUrl}${separator}fl_attachment:${downloadFilename}`;
-        }
-      }
-
-      await downloadFile(downloadUrl, downloadFilename);
-    } catch (error) {
-      console.error("Resume download failed:", error);
-      window.open(resumeUrl, "_blank");
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "accepted":
+        return "text-green-600 bg-green-100";
+      case "rejected":
+        return "text-red-600 bg-red-100";
+      case "pending":
+        return "text-yellow-600 bg-yellow-100";
+      case "reviewed":
+        return "text-blue-600 bg-blue-100";
+      default:
+        return "text-gray-600 bg-gray-100";
     }
   };
 
@@ -232,7 +242,7 @@ const ViewApplications = () => {
                   key={application._id}
                   className="p-6 hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="flex-shrink-0">
                         {application.candidate.profilePic ? (
@@ -269,19 +279,48 @@ const ViewApplications = () => {
                               )}
                             </span>
                           </div>
-                          {application.status && (
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              <span className="capitalize">
-                                {application.status}
-                              </span>
-                            </div>
-                          )}
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            <span
+                              className={`capitalize px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                                application.status || "pending"
+                              )}`}
+                            >
+                              {application.status || "pending"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                     
+                      <div className="flex flex-col">
+                        <label className="text-xs text-gray-500 mb-1">
+                          Update Status:
+                        </label>
+                        <select
+                          value={application.status || "pending"}
+                          onChange={(e) =>
+                            updateApplicationStatus(
+                              application._id,
+                              e.target.value
+                            )
+                          }
+                          disabled={updatingStatus === application._id}
+                          className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b3ee6d] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="reviewed">Reviewed</option>
+                          <option value="accepted">Accepted</option>
+                          <option value="rejected">Rejected</option>
+                        </select>
+                        {updatingStatus === application._id && (
+                          <span className="text-xs text-gray-500 mt-1">
+                            Updating...
+                          </span>
+                        )}
+                      </div>
                       {application.resume?.url && (
                         <button
                           onClick={() =>
