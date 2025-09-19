@@ -128,8 +128,8 @@ const Navbar = () => {
                     <DropdownMenuItem onClick={()=>navigate("/wishlist")}>
                       <BookmarkIcon /> Wishlist
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <CircleCheckBig /> Applied Jobs
+                    <DropdownMenuItem onClick={() => navigate("/my-applications")}>
+                      <CircleCheckBig /> My Applications
                     </DropdownMenuItem>
                   </>
                 )}

@@ -73,7 +73,7 @@ const ApplicationModal = ({ job, isOpen, onClose, onSubmit }) => {
 
     try {
       const response = await axios.post(
-        `${api_domain}/api/application/upload-resume`,
+        `${api_domain}/api/candidate/upload-resume`,
         formData,
         {
           withCredentials: true,
@@ -655,13 +655,13 @@ const JobDetails = () => {
                   {!userProfile ? (
                     <div className="text-center">
                       <p className="text-gray-600 mb-4">
-                        Sign in to apply for this position
+                        Log in to apply for this position
                       </p>
                       <Button
                         onClick={() => navigate("/login")}
                         className="w-full"
                       >
-                        Sign In to Apply
+                        Log In to Apply
                       </Button>
                     </div>
                   ) : hasApplied ? (

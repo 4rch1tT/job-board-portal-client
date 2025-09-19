@@ -74,17 +74,76 @@ const ViewApplications = () => {
     return "Not specified";
   };
 
-  const handleDownloadResume = (resumeUrl, candidateName) => {
-    if (resumeUrl) {
-      const link = document.createElement("a");
-      link.href = resumeUrl;
-      link.download = `${candidateName.replace(/\s+/g, "_")}_resume.pdf`;
-      link.target = "_blank";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
+  const handleDownloadResume = async (resumeUrl, candidateName, fileName) => {
+    if (!resumeUrl) {
       console.log("Resume not available");
+      return;
+    }
+
+    try {
+      const downloadFile = async (url, filename) => {
+        try {
+          const response = await fetch(url, {
+            method: "GET",
+            headers: {
+              Accept:
+                "application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, */*",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const blob = await response.blob();
+          const blobUrl = window.URL.createObjectURL(blob);
+
+          const link = document.createElement("a");
+          link.href = blobUrl;
+          link.download = filename;
+          link.style.display = "none";
+
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+          console.error("Download failed:", error);
+          window.open(url, "_blank");
+        }
+      };
+
+      let extension = "pdf"; 
+      if (fileName) {
+        const ext = fileName.split(".").pop()?.toLowerCase();
+        if (["pdf", "doc", "docx"].includes(ext)) {
+          extension = ext;
+        }
+      } else {
+        const urlParts = resumeUrl.split(".");
+        const urlExt = urlParts[urlParts.length - 1]?.toLowerCase();
+        if (["pdf", "doc", "docx"].includes(urlExt)) {
+          extension = urlExt;
+        }
+      }
+
+      const cleanName =
+        candidateName?.replace(/[^a-zA-Z0-9]/g, "_") || "candidate";
+      const downloadFilename = `${cleanName}_resume.${extension}`;
+
+      let downloadUrl = resumeUrl;
+      if (resumeUrl.includes("cloudinary.com")) {
+        if (!resumeUrl.includes("fl_attachment")) {
+          const separator = resumeUrl.includes("?") ? "&" : "?";
+          downloadUrl = `${resumeUrl}${separator}fl_attachment:${downloadFilename}`;
+        }
+      }
+
+      await downloadFile(downloadUrl, downloadFilename);
+    } catch (error) {
+      console.error("Resume download failed:", error);
+      window.open(resumeUrl, "_blank");
     }
   };
 
@@ -142,7 +201,6 @@ const ViewApplications = () => {
                 <span>{jobDetails.jobType}</span>
               </div>
               <div className="flex items-center gap-2">
-                <DollarSign className="h-4 w-4" />
                 <span>{formatSalary(jobDetails.salary)}</span>
               </div>
             </div>

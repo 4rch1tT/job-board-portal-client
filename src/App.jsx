@@ -27,6 +27,7 @@ import ViewApplications from "./pages/recruiter/ViewApplications";
 import Jobs from "./pages/candidate/Jobs";
 import JobDetails from "./pages/candidate/JobDetails";
 import Wishlist from "./pages/candidate/Wishlist";
+import MyApplications from "./pages/candidate/MyApplications";
 
 const router = createBrowserRouter([
   {
@@ -59,12 +60,16 @@ const router = createBrowserRouter([
       },
       {
         path: "job-details/:jobId",
-        element: <JobDetails />
+        element: <JobDetails />,
       },
       {
         path: "wishlist",
-        element: <Wishlist/>
-      }
+        element: <Wishlist />,
+      },
+      {
+        path: "my-applications",
+        element: <MyApplications />
+      },
     ],
   },
   {
