@@ -1,20 +1,36 @@
-import React, { useState } from "react";
-import { Switch } from "./ui/switch";
-import { Sun, Moon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 
-const ThemeToggle = () => {
-  const [checked, setChecked] = useState(false);
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+export default function ThemeToggle() {
+ 
+
   return (
-    <div className="flex items-center space-x-3">
-      <Sun className="size-4" />
-      <Switch
-        checked={checked}
-        onCheckedChange={(value) => setChecked(value)}
-        aria-label="Toggle theme"
-      />
-      <Moon className="size-4" />
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
-};
-
-export default ThemeToggle;
+}
