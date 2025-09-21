@@ -139,7 +139,9 @@ const Navbar = () => {
                       <DropdownMenuItem onClick={() => navigate("/wishlist")}>
                         <BookmarkIcon /> Wishlist
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => navigate("/my-applications")}
+                      >
                         <CircleCheckBig /> Applied Jobs
                       </DropdownMenuItem>
                     </>
@@ -260,7 +262,9 @@ const Navbar = () => {
                       <DropdownMenuItem onClick={() => navigate("/wishlist")}>
                         <BookmarkIcon /> Wishlist
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => navigate("/my-applications")}
+                      >
                         <CircleCheckBig /> Applied Jobs
                       </DropdownMenuItem>
                     </>
