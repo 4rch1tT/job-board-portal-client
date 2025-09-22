@@ -7,7 +7,14 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Search,
   MapPin,
@@ -23,13 +30,17 @@ import {
 import companies from "@/data/companies";
 import JobCard from "@/components/JobCard";
 import Autoplay from "embla-carousel-autoplay";
+import teamwork from "@/assets/images/teamwork.svg";
+import axios from "axios";
 
 const Home = () => {
+  const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [currentStatIndex, setCurrentStatIndex] = useState(0);
+  const [jobs, setJobs] = useState([]);
 
   const stats = [
     { label: "Active Jobs", value: "10,000+", icon: Briefcase },
@@ -44,6 +55,30 @@ const Home = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [stats.length]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`${api_domain}/api/job/all`);
+
+        setJobs(response.data.jobs || []);
+      } catch (error) {
+        console.error("Failed to fetch jobs:", error);
+        setJobs([]);
+      }
+    };
+    fetchJobs();
+  }, [api_domain]);
+
+  const featuredJobs = [];
+  const companiesSet = new Set();
+
+  jobs.forEach((job) => {
+    if (!companiesSet.has(job.company)) {
+      featuredJobs.push(job);
+      companiesSet.add(job.company);
+    }
+  });
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -142,102 +177,92 @@ const Home = () => {
           </Carousel>
         </div>
 
-        {/* Featured Jobs Section */}
         <div>
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Featured Opportunities
-            </h2>
+            <h2 className="text-3xl font-bold  mb-4">Featured Opportunities</h2>
             <p className="text-gray-600 text-lg">
               Hand-picked jobs from our top partners
             </p>
           </div>
 
-          {/* <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {featuredJobs.map((job) => (
               <Card
                 key={job.id}
                 className="hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white/80 backdrop-blur-sm"
               >
-                <CardHeader className="pb-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="text-2xl">{job.logo}</div>
-                      <div>
-                        <CardTitle className="text-lg">{job.title}</CardTitle>
-                        <CardDescription className="text-gray-600">
-                          {job.company}
-                        </CardDescription>
+                <CardContent className="pt-4">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <img
+                      src={job.company.logoUrl}
+                      alt={job.company.name}
+                      className="h-8 w-8"
+                    />
+                    <div>
+                      <div className="font-bold">{job.title}</div>
+                      <div className="text-gray-600 text-sm">
+                        {job.company.name}
                       </div>
-                    </div>
-                    <Badge variant="outline" className="text-xs">
-                      {job.type}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center space-x-1 text-gray-600">
-                        <MapPin className="h-4 w-4" />
-                        <span>{job.location}</span>
-                      </div>
-                      <div className="flex items-center space-x-1 text-gray-600">
-                        <Clock className="h-4 w-4" />
-                        <span>{job.posted}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-1 text-green-600 font-semibold">
-                        <DollarSign className="h-4 w-4" />
-                        <span>{job.salary}</span>
-                      </div>
-                      <Button
-                        size="sm"
-                        className="bg-blue-600 hover:bg-blue-700"
-                      >
-                        Apply Now
-                      </Button>
                     </div>
                   </div>
+                  <div className="flex items-center text-gray-600 text-sm mb-2">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {job.location}
+                  </div>
+
+                  <Button
+                    size="sm"
+                    className="bg-[#b3ee6d] hover:bg-[#b3ee2d]"
+                    onClick={() => navigate(`/job-details/${job._id}`)}
+                  >
+                    Apply Now
+                  </Button>
                 </CardContent>
               </Card>
             ))}
-          </div> */}
+          </div>
 
           <div className="text-center mt-8">
             <Button
               variant="outline"
               size="lg"
-              className="border-[#b3ee6d] text-[#b3ee6d] hover:bg-white-50"
+              className="border-[#b3ee6d] text-[#b3ee6d] hover:bg-[#b3ee6d] hover:text-white"
+              onClick={() => navigate("/jobs")}
             >
               View All Jobs
             </Button>
           </div>
         </div>
 
-        <div className="text-center bg-gradient-to-r from-[#b3ee2d] to-[#b3ee7d] rounded-2xl p-12 text-white">
-          <h2 className="text-3xl font-bold mb-4">
-            Ready to Start Your Journey?
-          </h2>
-          <p className="text-xl mb-8 ">
-            Join thousands of professionals who found their dream jobs
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              variant="secondary"
-              className="text-[#b3ee2d] hover:bg-white hover:text-black"
-            >
-              Browse All Jobs
-            </Button>
-            <Button size="lg" variant="outline" className="text-[#b3ee2d]">
-              Create Profile
-            </Button>
+        <div className=" bg-gradient-to-r from-[#b3ee2d] to-[#b3ee9d] rounded-2xl p-12 text-white flex justify-between items-center">
+          <div className="flex flex-col">
+            <h2 className="text-3xl font-bold mb-4">
+              Ready to Start Your Journey?
+            </h2>
+            <p className="text-xl mb-8 ">
+              Join thousands of professionals who found their dream jobs
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-2">
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-[#b3ee5d] hover:bg-white hover:text-[#b3ee6d] border-2"
+              >
+                Browse All Jobs
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-[#b3ee2d] hover:bg-[#b3ee6d] hover:text-white"
+              >
+                Create Profile
+              </Button>
+            </div>
           </div>
+          <img src={teamwork} alt="teamwork" className="w-64 hidden md:block" />
         </div>
       </div>
-      <div className="h-16"></div> {/* Spacer */}
+      <div className="h-16"></div>
     </div>
   );
 };

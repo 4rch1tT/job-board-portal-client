@@ -204,23 +204,15 @@ const JobCard = ({
         </CardContent>
 
         <CardFooter className="pt-4 border-t bg-gray-50/50">
-          <div className="flex items-center justify-between w-full gap-3">
+          <div className="flex items-center  w-full gap-3">
             <Button
               variant="outline"
               size="sm"
               onClick={handleViewDetails}
-              className="flex-1 hover:bg-gray-100"
+              className="flex-1 text-[#b3ee6d] hover:bg-[#b3ee6d] hover:text-white"
             >
               <ExternalLink className="h-4 w-4 mr-2" />
               View Details
-            </Button>
-
-            <Button
-              size="sm"
-              onClick={handleApply}
-              className="flex-1 bg-gradient-to-r from-[#b3ee6d] to-[#6d982b] hover:from-[#b2ef67] hover:to-[#577d1d] text-white border-0"
-            >
-              Apply Now
             </Button>
           </div>
         </CardFooter>

@@ -208,10 +208,6 @@ const Jobs = () => {
     fetchJobs();
   }, [fetchJobs]);
 
-  const handleApply = (jobId) => {
-    navigate(``);
-  };
-
   const handleViewDetails = (jobId) => {
     navigate(`/job-details/${jobId}`);
   };
@@ -596,7 +592,6 @@ const Jobs = () => {
               <JobCard
                 key={job._id}
                 job={job}
-                onApply={handleApply}
                 onViewDetails={handleViewDetails}
                 onToggleWishlist={handleToggleWishlist}
                 isInWishlist={wishlist.includes(job._id)}
