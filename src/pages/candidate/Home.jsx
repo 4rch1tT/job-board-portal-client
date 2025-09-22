@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,8 +7,9 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-  SearchIcon,
+  Search,
   MapPin,
   Building2,
   Users,
@@ -23,6 +25,8 @@ import JobCard from "@/components/JobCard";
 import Autoplay from "embla-carousel-autoplay";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [currentStatIndex, setCurrentStatIndex] = useState(0);
@@ -41,6 +45,13 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [stats.length]);
 
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.append("search", searchQuery);
+    if (locationQuery) params.append("location", locationQuery);
+    navigate(`/jobs?${params.toString()}`);
+  };
+
   const currentStat = stats[currentStatIndex];
   const StatIcon = currentStat.icon;
 
@@ -49,7 +60,7 @@ const Home = () => {
       <div className="pt-20 pb-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <div className="mb-8">
-            <h1 className="hero-text text-5xl md:text-6xl font-bold bg-clip-text mb-4 leading-tight text-[#333333]">
+            <h1 className="hero-text text-4xl md:text-5xl font-bold bg-clip-text mb-4 leading-tight">
               Find Your Next Opportunity
             </h1>
             <p className="font-heading font-semibold text-xl md:text-2xl text-gray-600 ">
@@ -71,45 +82,41 @@ const Home = () => {
             </div>
           </div>
 
-          {/* <div className="max-w-4xl mx-auto">
-            <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex items-center flex-1 bg-gray-50 rounded-lg px-4 py-3">
-                    <Search className="h-5 w-5 text-gray-400 mr-3" />
-                    <Input
-                      placeholder="Job title, skills, or company"
-                      className="border-0 bg-transparent focus-visible:ring-0 text-lg"
-                      // value={searchQuery}
-                      // onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex items-center flex-1 bg-gray-50 rounded-lg px-4 py-3">
-                    <MapPin className="h-5 w-5 text-gray-400 mr-3" />
-                    <Input
-                      placeholder="City or remote"
-                      className="border-0 bg-transparent focus-visible:ring-0 text-lg"
-                      // value={locationQuery}
-                      // onChange={(e) => setLocationQuery(e.target.value)}
-                    />
-                  </div>
-                  <Button
-                    // onClick={}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 py-3 text-lg rounded-lg shadow-lg transform transition hover:scale-105"
-                  >
-                    Search Jobs
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div> */}
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-4 items-center bg-white shadow-lg border-0 md:border md:rounded-full px-3 py-1.5">
+              <div className="flex items-center flex-1 bg-gray-50 rounded-lg px-4 py-3">
+                <Search className="h-5 w-5 text-gray-400 mr-3" />
+                <Input
+                  placeholder="Job title, skills, or company"
+                  className="border-0 bg-transparent focus-visible:ring-0 text-lg"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              <div className="flex items-center flex-1 bg-gray-50 rounded-lg px-4 py-3">
+                <MapPin className="h-5 w-5 text-gray-400 mr-3" />
+                <Input
+                  placeholder="City or remote"
+                  className="border-0 bg-transparent focus-visible:ring-0 text-lg"
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
+                />
+              </div>
+              <Button
+                onClick={handleSearch}
+                className="bg-gradient-to-r from-[#b3ee6d] to-[#b3ee2d] hover:from-[#b3ee4d] hover:to-[#b3ee1d] px-6 py-3 text-lg rounded-full shadow-lg transform transition hover:scale-105"
+              >
+                Search Jobs
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-4 space-y-16">
+      <div className="max-w-6xl mx-auto px-4 space-y-16 mt-8">
         <div className="text-center">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Trusted by
+              Top companies hiring now
             </h2>
           </div>
           <Carousel
@@ -202,34 +209,29 @@ const Home = () => {
             <Button
               variant="outline"
               size="lg"
-              className="border-blue-600 text-blue-600 hover:bg-blue-50"
+              className="border-[#b3ee6d] text-[#b3ee6d] hover:bg-white-50"
             >
               View All Jobs
             </Button>
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-white">
+        <div className="text-center bg-gradient-to-r from-[#b3ee2d] to-[#b3ee7d] rounded-2xl p-12 text-white">
           <h2 className="text-3xl font-bold mb-4">
             Ready to Start Your Journey?
           </h2>
-          <p className="text-xl mb-8 text-blue-100">
+          <p className="text-xl mb-8 ">
             Join thousands of professionals who found their dream jobs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
               variant="secondary"
-              className="bg-white text-blue-600 hover:bg-gray-100"
+              className="text-[#b3ee2d] hover:bg-white hover:text-black"
             >
               Browse All Jobs
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-blue-600"
-            >
+            <Button size="lg" variant="outline" className="text-[#b3ee2d]">
               Create Profile
             </Button>
           </div>
