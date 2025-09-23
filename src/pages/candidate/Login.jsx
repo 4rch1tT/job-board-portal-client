@@ -68,7 +68,7 @@ export function Login() {
         },
         { withCredentials: true }
       );
-      if (res.data.candidate.role !== "candidate") {
+      if (res.data.candidate.role === "recruiter" ) {
         form.setError("root", {
           type: "manual",
           message: "Only candidates can log in here.",
@@ -76,7 +76,11 @@ export function Login() {
         return;
       }
       dispatch(login(res.data.candidate));
-      navigate("/");
+      if(res.data.candidate.role === "candidate"){
+        navigate("/");
+      }else{
+        navigate("/admin")
+      }
     } catch (error) {
       console.log("Login failed", error.response?.data);
 

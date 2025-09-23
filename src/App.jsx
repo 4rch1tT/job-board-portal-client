@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import CandidateLayout from "./layouts/CandidateLayout";
 import RecruiterLayout from "./layouts/RecruiterLayout";
+import AdminLayout from "./layouts/AdminLayout";
 import DynamicHome from "./components/DynamicHome";
 
 // * Candidate pages
@@ -19,6 +20,9 @@ import RecruiterProfile from "./pages/recruiter/RecruiterProfile";
 import RecruiterUpdateProfile from "./pages/recruiter/RecruiterUpdateProfile";
 import PostJob from "./pages/recruiter/PostJob";
 
+//* Admin pages
+import Dashboard from "./pages/admin/Dashboard";
+
 import useAuthCheck from "./hooks/useAuthCheck";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -28,6 +32,7 @@ import Jobs from "./pages/candidate/Jobs";
 import JobDetails from "./pages/candidate/JobDetails";
 import Wishlist from "./pages/candidate/Wishlist";
 import MyApplications from "./pages/candidate/MyApplications";
+
 
 const router = createBrowserRouter([
   {
@@ -109,6 +114,16 @@ const router = createBrowserRouter([
         element: <ViewApplications />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "",
+        element: <Dashboard />
+      }
+    ]
   },
 ]);
 

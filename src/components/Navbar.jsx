@@ -37,6 +37,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isRecruiter = user?.role === "recruiter";
+  const isAdmin = user?.role === "admin";
   const isRegisterPage =
     location.pathname === "/register" ||
     location.pathname === "/recruiter/register";
@@ -113,7 +114,14 @@ const Navbar = () => {
 
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  {isRecruiter ? (
+                  {isAdmin ? (
+                    <>
+                      <DropdownMenuItem onClick={() => navigate("/admin")}>
+                        <UserRound /> Admin Dashboard
+                      </DropdownMenuItem>
+                      {/* Add more admin links here if needed */}
+                    </>
+                  ) : isRecruiter ? (
                     <>
                       <DropdownMenuItem
                         onClick={() => navigate("/recruiter/profile")}
@@ -236,7 +244,14 @@ const Navbar = () => {
 
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  {isRecruiter ? (
+                  {isAdmin ? (
+                    <>
+                      <DropdownMenuItem onClick={() => navigate("/admin")}>
+                        <UserRound /> Admin Dashboard
+                      </DropdownMenuItem>
+                      {/* Add more admin links here if needed */}
+                    </>
+                  ) : isRecruiter ? (
                     <>
                       <DropdownMenuItem
                         onClick={() => navigate("/recruiter/profile")}

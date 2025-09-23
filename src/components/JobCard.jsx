@@ -23,7 +23,6 @@ import {
 
 const JobCard = ({
   job,
-  onApply,
   onViewDetails,
   onToggleWishlist,
   isInWishlist = false,
@@ -73,10 +72,6 @@ const JobCard = ({
     );
   };
 
-  const handleApply = (e) => {
-    e.stopPropagation();
-    onApply?.(job._id || job.id);
-  };
 
   const handleWishlist = (e) => {
     e.stopPropagation();

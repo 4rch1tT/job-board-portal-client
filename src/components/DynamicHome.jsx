@@ -11,6 +11,10 @@ const DynamicHome = () => {
     return <Navigate to="/recruiter" replace />;
   }
 
+  if(isAuthenticated && user?.role === "admin"){
+    return <Navigate to="/admin" replace />
+  }
+
   return <Home />;
 };
 
