@@ -24,6 +24,7 @@ import {
   Settings,
   Loader2,
   AlertCircle,
+  Trash2,
 } from "lucide-react";
 import axios from "axios";
 
@@ -39,10 +40,14 @@ const Dashboard = () => {
     pendingJobs: 0,
     verifiedCompanies: 0,
     verifiedJobs: 0,
+    deletedJobs: 0,
+    rejectedJobs: 0,
+    activeJobs: 0,
   });
 
   const [recentActivity, setRecentActivity] = useState([]);
   const [pendingApprovals, setPendingApprovals] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -64,22 +69,34 @@ const Dashboard = () => {
         (c) => c.status === "pending"
       ).length;
 
-      const jobsResponse = await axios.get(`${api_domain}/api/job/admin/all`, {
-        withCredentials: true,
-      });
-      const jobs = jobsResponse.data.jobs || [];
-      const totalJobs = jobs.length;
-      const verifiedJobs = jobs.filter((j) => j.isVerified).length;
-      const pendingJobs = jobs.filter((j) => j.status === "pending").length;
+      const jobStatsResponse = await axios.get(
+        `${api_domain}/api/job/admin/stats`,
+        {
+          withCredentials: true,
+        }
+      );
+      const jobStats = jobStatsResponse.data.stats;
+
+      const allJobsResponse = await axios.get(
+        `${api_domain}/api/job/admin/all?includeDeleted=true&limit=1000`,
+        {
+          withCredentials: true,
+        }
+      );
+      const jobs = allJobsResponse.data.jobs || [];
+      setAllJobs(jobs);
 
       setStats({
         totalUsers,
         totalCompanies,
-        totalJobs,
+        totalJobs: jobStats.totalJobs,
         pendingCompanies,
-        pendingJobs,
+        pendingJobs: jobStats.pendingJobs,
         verifiedCompanies,
-        verifiedJobs,
+        verifiedJobs: jobStats.verifiedJobs,
+        deletedJobs: jobStats.deletedJobs,
+        rejectedJobs: jobStats.rejectedJobs,
+        activeJobs: jobStats.activeJobs,
       });
 
       const pending = [
@@ -93,14 +110,14 @@ const Dashboard = () => {
             status: c.status,
           })),
         ...jobs
-          .filter((j) => j.status === "pending")
+          .filter((j) => j.status === "pending" || (!j.isVerified && !j.status))
           .map((j) => ({
             id: j._id,
             type: "job",
             title: j.title,
             company: j.company?.name,
             submitted: j.createdAt,
-            status: j.status,
+            status: j.status || "pending",
           })),
       ];
 
@@ -108,6 +125,24 @@ const Dashboard = () => {
     } catch (error) {
       setError("Failed to load dashboard data");
       console.error("Stats fetch error:", error);
+    }
+  };
+
+  const handleJobAction = async (jobId, action) => {
+    try {
+      await axios.put(
+        `${api_domain}/api/job/admin/${jobId}/verify`,
+        { action },
+        { withCredentials: true }
+      );
+
+      await fetchStats();
+
+      // Show success message
+      console.log(`Job ${action}d successfully`);
+    } catch (error) {
+      console.error(`Error ${action}ing job:`, error);
+      setError(`Failed to ${action} job`);
     }
   };
 
@@ -127,43 +162,6 @@ const Dashboard = () => {
     };
     loadDashboardData();
   }, []);
-
-  const StatCard = ({
-    title,
-    value,
-    icon: Icon,
-    description,
-    trend,
-    loading,
-  }) => (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-muted-foreground" />
-      </CardHeader>
-      <CardContent>
-        {loading ? (
-          <div className="flex items-center space-x-2">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            <span className="text-sm text-gray-500">Loading...</span>
-          </div>
-        ) : (
-          <>
-            <div className="text-2xl font-bold">{value?.toLocaleString()}</div>
-            {description && (
-              <p className="text-xs text-muted-foreground">{description}</p>
-            )}
-            {trend && (
-              <div className="flex items-center text-xs text-green-600 mt-1">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                {trend}
-              </div>
-            )}
-          </>
-        )}
-      </CardContent>
-    </Card>
-  );
 
   const getActivityIcon = (type) => {
     switch (type) {
@@ -193,6 +191,62 @@ const Dashboard = () => {
     }
   };
 
+  const StatCard = ({
+    title,
+    value,
+    icon: Icon,
+    description,
+    loading,
+    variant = "default",
+  }) => (
+    <Card
+      className={
+        variant === "warning"
+          ? "border-yellow-300"
+          : variant === "danger"
+          ? "border-red-300"
+          : ""
+      }
+    >
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <Icon className="h-4 w-4 text-muted-foreground" />
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <div className="flex items-center space-x-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            <span className="text-sm text-gray-500">Loading...</span>
+          </div>
+        ) : (
+          <>
+            <div className="text-2xl font-bold">{value?.toLocaleString()}</div>
+            {description && (
+              <p className="text-xs text-muted-foreground">{description}</p>
+            )}
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+
+  const getJobStatusBadge = (job) => {
+    if (job.isDeleted) {
+      return <Badge variant="destructive">Deleted</Badge>;
+    }
+    if (job.status === "rejected") {
+      return <Badge variant="destructive">Rejected</Badge>;
+    }
+    if (job.isVerified) {
+      return (
+        <Badge variant="default" className="bg-green-100 text-green-800">
+          Verified
+        </Badge>
+      );
+    }
+    return <Badge variant="secondary">Pending</Badge>;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
@@ -207,7 +261,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
           <p className="text-gray-600">
@@ -215,7 +268,6 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Error Alert */}
         {error && (
           <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-4 w-4" />
@@ -223,14 +275,12 @@ const Dashboard = () => {
           </Alert>
         )}
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatCard
             title="Total Users"
             value={stats.totalUsers}
             icon={Users}
             description="Candidates & Recruiters"
-            trend="+12% from last month"
             loading={loading}
           />
           <StatCard
@@ -238,15 +288,13 @@ const Dashboard = () => {
             value={stats.totalCompanies}
             icon={Building2}
             description={`${stats.verifiedCompanies} verified`}
-            trend="+5% from last month"
             loading={loading}
           />
           <StatCard
-            title="Total Jobs"
+            title="All Jobs"
             value={stats.totalJobs}
             icon={Briefcase}
-            description={`${stats.verifiedJobs} verified`}
-            trend="+8% from last month"
+            description={`${stats.activeJobs} active, ${stats.deletedJobs} deleted`}
             loading={loading}
           />
           <StatCard
@@ -255,13 +303,48 @@ const Dashboard = () => {
             icon={Clock}
             description={`${stats.pendingCompanies} companies, ${stats.pendingJobs} jobs`}
             loading={loading}
+            variant={
+              stats.pendingCompanies + stats.pendingJobs > 20
+                ? "warning"
+                : "default"
+            }
           />
         </div>
 
-        {/* Main Content */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <StatCard
+            title="Verified Jobs"
+            value={stats.verifiedJobs}
+            icon={CheckCircle}
+            description="Currently active"
+            loading={loading}
+          />
+          <StatCard
+            title="Rejected Jobs"
+            value={stats.rejectedJobs}
+            icon={XCircle}
+            description="Not approved"
+            loading={loading}
+            variant="danger"
+          />
+          <StatCard
+            title="Deleted Jobs"
+            value={stats.deletedJobs}
+            icon={Trash2}
+            description="Soft deleted"
+            loading={loading}
+          />
+        </div>
+
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="jobs">
+              All Jobs
+              <Badge variant="secondary" className="ml-2">
+                {stats.totalJobs}
+              </Badge>
+            </TabsTrigger>
             <TabsTrigger value="approvals">
               Pending Approvals
               {stats.pendingCompanies + stats.pendingJobs > 0 && (
@@ -301,7 +384,6 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
 
-              {/* Platform Health */}
               <Card>
                 <CardHeader>
                   <CardTitle>Platform Health</CardTitle>
@@ -344,6 +426,22 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Jobs Active</span>
+                    <div className="flex items-center">
+                      <Badge
+                        variant="success"
+                        className="bg-blue-100 text-blue-800"
+                      >
+                        {stats.totalJobs > 0
+                          ? Math.round(
+                              (stats.activeJobs / stats.totalJobs) * 100
+                            )
+                          : 0}
+                        %
+                      </Badge>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Pending Reviews</span>
                     <div className="flex items-center">
                       <Badge
@@ -360,6 +458,82 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          <TabsContent value="jobs">
+            <Card>
+              <CardHeader>
+                <CardTitle>All Jobs</CardTitle>
+                <CardDescription>
+                  Complete list of all jobs in the system
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {allJobs.map((job) => (
+                    <div
+                      key={job._id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Briefcase className="h-5 w-5 text-green-500" />
+                        <div>
+                          <h4 className="font-medium">{job.title}</h4>
+                          <p className="text-sm text-gray-500">
+                            {job.company?.name} • {job.location} • {job.jobType}
+                          </p>
+                          <p className="text-xs text-gray-400">
+                            Posted:{" "}
+                            {new Date(job.createdAt).toLocaleDateString()}
+                            {job.applicantCount !== undefined && (
+                              <span> • {job.applicantCount} applications</span>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {getJobStatusBadge(job)}
+                        <Button size="sm" variant="outline">
+                          <Eye className="h-4 w-4 mr-1" />
+                          View
+                        </Button>
+                        {!job.isVerified &&
+                          !job.isDeleted &&
+                          job.status !== "rejected" && (
+                            <>
+                              <Button
+                                size="sm"
+                                className="bg-green-600 hover:bg-green-700"
+                                onClick={() =>
+                                  handleJobAction(job._id, "approve")
+                                }
+                              >
+                                <CheckCircle className="h-4 w-4 mr-1" />
+                                Approve
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() =>
+                                  handleJobAction(job._id, "reject")
+                                }
+                              >
+                                <XCircle className="h-4 w-4 mr-1" />
+                                Reject
+                              </Button>
+                            </>
+                          )}
+                      </div>
+                    </div>
+                  ))}
+                  {allJobs.length === 0 && (
+                    <div className="text-center py-8 text-gray-500">
+                      No jobs found
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="approvals">
@@ -409,13 +583,11 @@ const Dashboard = () => {
                           <Button
                             size="sm"
                             className="bg-green-600 hover:bg-green-700"
-                            // onClick={() => {
-                            //   if (item.type === "company") {
-                            //     handleApproveCompany(item.id);
-                            //   } else {
-                            //     handleVerifyJob(item.id);
-                            //   }
-                            // }}
+                            onClick={() => {
+                              if (item.type === "job") {
+                                handleJobAction(item.id, "approve");
+                              }
+                            }}
                           >
                             <CheckCircle className="h-4 w-4 mr-1" />
                             Approve
@@ -423,12 +595,11 @@ const Dashboard = () => {
                           <Button
                             size="sm"
                             variant="destructive"
-                            // onClick={() => {
-                            //   if (item.type === "company") {
-                            //     handleRejectCompany(item.id);
-                            //   }
-                            //   // Add job rejection handler if needed
-                            // }}
+                            onClick={() => {
+                              if (item.type === "job") {
+                                handleJobAction(item.id, "reject");
+                              }
+                            }}
                           >
                             <XCircle className="h-4 w-4 mr-1" />
                             Reject
@@ -450,31 +621,40 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {recentActivity.map((activity) => (
-                    <div
-                      key={activity.id}
-                      className="flex items-center space-x-4"
-                    >
-                      <div
-                        className={`p-2 rounded-full ${getActivityColor(
-                          activity.action
-                        )}`}
-                      >
-                        {getActivityIcon(activity.type)}
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium">
-                          {activity.type === "user" &&
-                            `User ${activity.action}`}
-                          {activity.type === "company" &&
-                            `Company ${activity.action}`}
-                          {activity.type === "job" && `Job ${activity.action}`}
-                        </p>
-                        <p className="text-sm text-gray-500">{activity.name}</p>
-                      </div>
-                      <p className="text-xs text-gray-400">{activity.time}</p>
+                  {recentActivity.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500">
+                      No recent activity
                     </div>
-                  ))}
+                  ) : (
+                    recentActivity.map((activity) => (
+                      <div
+                        key={activity.id}
+                        className="flex items-center space-x-4"
+                      >
+                        <div
+                          className={`p-2 rounded-full ${getActivityColor(
+                            activity.action
+                          )}`}
+                        >
+                          {getActivityIcon(activity.type)}
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <p className="text-sm font-medium">
+                            {activity.type === "user" &&
+                              `User ${activity.action}`}
+                            {activity.type === "company" &&
+                              `Company ${activity.action}`}
+                            {activity.type === "job" &&
+                              `Job ${activity.action}`}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {activity.name}
+                          </p>
+                        </div>
+                        <p className="text-xs text-gray-400">{activity.time}</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
