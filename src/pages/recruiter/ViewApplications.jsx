@@ -294,7 +294,6 @@ const ViewApplications = () => {
                     </div>
 
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                     
                       <div className="flex flex-col">
                         <label className="text-xs text-gray-500 mb-1">
                           Update Status:
@@ -329,7 +328,7 @@ const ViewApplications = () => {
                               application.candidate.name
                             )
                           }
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#b3ee6d] hover:bg-[#a8e55a] text-sm font-medium text-gray-800 rounded-lg transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#b3ee6d] hover:bg-[#a8e55a] text-sm font-medium text-gray-800 rounded-lg transition-colors md:mt-5"
                         >
                           <Download className="h-4 w-4" />
                           Resume

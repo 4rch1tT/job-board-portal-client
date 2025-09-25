@@ -27,6 +27,7 @@ import {
   Trash2,
 } from "lucide-react";
 import axios from "axios";
+import JobReviewModal from "@/components/JobReviewModal";
 
 const Dashboard = () => {
   const api_domain = import.meta.env.VITE_API_DOMAIN;
@@ -50,6 +51,9 @@ const Dashboard = () => {
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState(null);
 
   const fetchStats = async () => {
     try {
@@ -85,6 +89,13 @@ const Dashboard = () => {
       );
       const jobs = allJobsResponse.data.jobs || [];
       setAllJobs(jobs);
+
+      const recentActivityResponse = await axios.get(
+        `${api_domain}/api/admin/recent-activity`,
+        { withCredentials: true }
+      );
+      const recentActivities = recentActivityResponse.data.activities || [];
+      setRecentActivity(recentActivities);
 
       setStats({
         totalUsers,
@@ -144,6 +155,20 @@ const Dashboard = () => {
       console.error(`Error ${action}ing job:`, error);
       setError(`Failed to ${action} job`);
     }
+  };
+
+  const openJobReviewModal = (jobId) => {
+    setSelectedJobId(jobId);
+    setIsModalOpen(true);
+  };
+
+  const closeJobReviewModal = () => {
+    setIsModalOpen(false);
+    setSelectedJobId(null);
+  };
+
+  const handleModalJobAction = async (jobId, action) => {
+    await fetchStats();
   };
 
   useEffect(() => {
@@ -358,7 +383,6 @@ const Dashboard = () => {
 
           <TabsContent value="overview">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Quick Actions */}
               <Card>
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
@@ -371,15 +395,11 @@ const Dashboard = () => {
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Building2 className="mr-2 h-4 w-4" />
-                    Review Companies
+                    Manage Companies
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Briefcase className="mr-2 h-4 w-4" />
-                    Verify Job Listings
-                  </Button>
-                  <Button className="w-full justify-start" variant="outline">
-                    <Eye className="mr-2 h-4 w-4" />
-                    View Reports
+                    Manage Jobs
                   </Button>
                 </CardContent>
               </Card>
@@ -478,7 +498,7 @@ const Dashboard = () => {
                       <div className="flex items-center space-x-3">
                         <Briefcase className="h-5 w-5 text-green-500" />
                         <div>
-                          <h4 className="font-medium">{job.title}</h4>
+                          <p className="font-medium">{job.title}</p>
                           <p className="text-sm text-gray-500">
                             {job.company?.name} • {job.location} • {job.jobType}
                           </p>
@@ -493,7 +513,11 @@ const Dashboard = () => {
                       </div>
                       <div className="flex items-center space-x-2">
                         {getJobStatusBadge(job)}
-                        <Button size="sm" variant="outline">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => openJobReviewModal(job._id)}
+                        >
                           <Eye className="h-4 w-4 mr-1" />
                           View
                         </Button>
@@ -561,9 +585,9 @@ const Dashboard = () => {
                             <Briefcase className="h-5 w-5 text-green-500" />
                           )}
                           <div>
-                            <h4 className="font-medium">
+                            <p className="font-medium">
                               {item.type === "company" ? item.name : item.title}
-                            </h4>
+                            </p>
                             {item.company && (
                               <p className="text-sm text-gray-500">
                                 {item.company}
@@ -576,9 +600,17 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Button size="sm" variant="outline">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              if (item.type === "job") {
+                                openJobReviewModal(item.id);
+                              }
+                            }}
+                          >
                             <Eye className="h-4 w-4 mr-1" />
-                            Review
+                            view
                           </Button>
                           <Button
                             size="sm"
@@ -660,6 +692,12 @@ const Dashboard = () => {
             </Card>
           </TabsContent>
         </Tabs>
+        <JobReviewModal
+          isOpen={isModalOpen}
+          onClose={closeJobReviewModal}
+          jobId={selectedJobId}
+          onJobAction={handleModalJobAction}
+        />
       </div>
     </div>
   );
