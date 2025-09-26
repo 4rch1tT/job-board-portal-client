@@ -262,12 +262,12 @@ const Jobs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b sticky top-0 z-40">
+    <div className="min-h-screen">
+      <div className=" border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2  h-4 w-4" />
               <Input
                 placeholder="Search jobs, companies, keywords..."
                 className="pl-10 h-12 text-base"
@@ -519,7 +519,7 @@ const Jobs = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold">
               {searchTerm ? `Search results for "${searchTerm}"` : "All Jobs"}
             </h1>
             <p className="text-gray-600 mt-1">
@@ -561,10 +561,10 @@ const Jobs = () => {
             {[...Array(6)].map((_, index) => (
               <Card key={index} className="animate-pulse">
                 <CardContent className="p-6">
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/2 mb-4"></div>
-                  <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 rounded w-3/4 mb-4"></div>
+                  <div className="h-3 rounded w-1/2 mb-4"></div>
+                  <div className="h-3 rounded w-full mb-2"></div>
+                  <div className="h-3 rounded w-3/4"></div>
                 </CardContent>
               </Card>
             ))}
@@ -572,9 +572,7 @@ const Jobs = () => {
         ) : jobs.length === 0 ? (
           <div className="text-center py-16">
             <Building2 className="mx-auto h-24 w-24 text-gray-300" />
-            <h3 className="mt-4 text-xl font-semibold text-gray-900">
-              No jobs found
-            </h3>
+            <h3 className="mt-4 text-xl font-semibold ">No jobs found</h3>
             <p className="mt-2 text-gray-500 max-w-md mx-auto">
               {searchTerm || activeFiltersCount > 0
                 ? "Try adjusting your search criteria or filters to find more jobs."

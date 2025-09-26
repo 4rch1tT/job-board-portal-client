@@ -207,9 +207,9 @@ export default function PostJob() {
 
   if (isEditMode && isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#b3ee6d] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading job data...</p>
         </div>
       </div>
@@ -217,12 +217,12 @@ export default function PostJob() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-8 px-4 sm:px-6 lg-px-8 flex flex-col justify-center items-center ">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white shadow-xl rounded-2xl p-6">
+    <div className="min-h-screen  py-8 px-4 sm:px-6 lg-px-8 flex flex-col justify-center items-center ">
+      <div className="max-w-4xl bg-muted rounded-2xl mx-auto">
+        <div className=" shadow-xl rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="tex-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <h2 className="tex-xl font-bold  bg-clip-text ">
                 {isEditMode ? "Edit Job" : "Post a New Job"}
               </h2>
               <p className="text-sm text-gray-600 mt-1">
@@ -246,10 +246,7 @@ export default function PostJob() {
             className="space-y-6 max-w-2xl mx-auto p-6"
           >
             <div className="space-y-2">
-              <Label
-                htmlFor="title"
-                className="text-sm font-medium text-gray-700"
-              >
+              <Label htmlFor="title" className="text-sm font-medium">
                 Job Title
                 <span className="text-red-500 ml-1">*</span>
               </Label>
@@ -266,7 +263,7 @@ export default function PostJob() {
             <div className="space-y-2">
               <Label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium"
               >
                 Job Description
                 <span className="text-red-500 ml-1">*</span>
@@ -284,7 +281,7 @@ export default function PostJob() {
             <div className="space-y-2">
               <Label
                 htmlFor="requirements"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium"
               >
                 Requirements
                 <span className="text-red-500 ml-1">*</span>
@@ -300,10 +297,7 @@ export default function PostJob() {
             </div>
 
             <div className="space-y-2">
-              <Label
-                htmlFor="skills"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <Label htmlFor="skills" className="block text-sm font-medium">
                 Skills
               </Label>
               <Input
@@ -318,7 +312,7 @@ export default function PostJob() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <Label className="text-sm font-medium text-gray-700 mb-2">
+                <Label className="text-sm font-medium mb-2">
                   Location
                   <span className="text-red-500 ml-1">*</span>
                 </Label>
@@ -340,7 +334,7 @@ export default function PostJob() {
               </div>
 
               <div>
-                <Label className="text-sm font-medium text-gray-700 mb-2">
+                <Label className="text-sm font-medium mb-2">
                   Category
                   <span className="text-red-500 ml-1">*</span>
                 </Label>
@@ -362,7 +356,7 @@ export default function PostJob() {
               </div>
 
               <div>
-                <Label className="text-sm font-medium text-gray-700 mb-2">
+                <Label className="text-sm font-medium mb-2">
                   Type
                   <span className="text-red-500 ml-1">*</span>
                 </Label>
@@ -385,7 +379,7 @@ export default function PostJob() {
             </div>
 
             <div>
-              <Label className="text-sm font-medium text-gray-700 mb-2">
+              <Label className="text-sm font-medium mb-2">
                 Company
                 <span className="text-red-500 ml-1">*</span>
               </Label>
@@ -430,7 +424,7 @@ export default function PostJob() {
             </div>
 
             <div>
-              <Label className="text-sm font-medium text-gray-700 mb-2">
+              <Label className="text-sm font-medium mb-2">
                 Salary Range
                 <span className="text-red-500 ml-1">*</span>
               </Label>

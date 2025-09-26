@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Geist";
-  src: url("./assets/fonts/Geist/static/Geist-Regular.ttf") format("ttf");
+  src: url("./assets/fonts/Geist/static/Geist-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: "Geist";
-  src: url("./assets/fonts/Geist/static/Geist-Medium.ttf") format("ttf");
+  src: url("./assets/fonts/Geist/static/Geist-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: "Geist";
-  src: url("./assets/fonts/Geist/static/Geist-SemiBold.ttf") format("ttf");
+  src: url("./assets/fonts/Geist/static/Geist-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: "Geist";
-  src: url("./assets/fonts/Geist/static/Geist-Bold.ttf") format("ttf");
+  src: url("./assets/fonts/Geist/static/Geist-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: "Arvo";
-  src: url("./assets/fonts/Arvo/Arvo-Regular.ttf") format("ttf");
+  src: url("./assets/fonts/Arvo/Arvo-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -40,7 +40,7 @@
 
 @font-face {
   font-family: "Arvo";
-  src: url("./assets/fonts/Arvo/Arvo-Bold.ttf") format("ttf");
+  src: url("./assets/fonts/Arvo/Arvo-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -48,7 +48,7 @@
 
 @font-face {
   font-family: "Arvo";
-  src: url("./assets/fonts/Arvo/Arvo-Italic.ttf") format("ttf");
+  src: url("./assets/fonts/Arvo/Arvo-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -56,7 +56,7 @@
 
 @font-face {
   font-family: "Arvo";
-  src: url("./assets/fonts/Arvo/Arvo-BoldItalic.ttf") format("ttf");
+  src: url("./assets/fonts/Arvo/Arvo-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -65,7 +65,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 @theme inline {
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;

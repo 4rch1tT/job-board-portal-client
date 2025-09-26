@@ -69,12 +69,12 @@ export function RecruiterLogin() {
         { withCredentials: true }
       );
       if (res.data.recruiter.role !== "recruiter") {
-      form.setError("root", {
-        type: "manual",
-        message: "Only recruiters can log in here.",
-      });
-      return;
-    }
+        form.setError("root", {
+          type: "manual",
+          message: "Only recruiters can log in here.",
+        });
+        return;
+      }
       dispatch(login(res.data.recruiter));
       navigate("/recruiter");
     } catch (error) {
@@ -101,8 +101,8 @@ export function RecruiterLogin() {
 
   return (
     <div className="min-h-screen bg-muted">
-      <div className="grid grid-cols-9 grid-rows-8">
-        <div className="col-span-3 row-span-8 tracking-tight  text-[#3c3c3c] h-screen bg-[#b3ee6d] p-8 flex flex-col justify-evenly">
+      <div className="grid grid-cols-1 md:grid-cols-9 grid-rows-8">
+        <div className="col-span-1 md:col-span-3 row-span-8 tracking-tight text-[#3c3c3c] h-screen bg-[#b3ee6d] p-8 flex flex-col justify-evenly">
           <h2 className="mb-8 text-3xl font-semibold">
             Login and find the right candidates
           </h2>
@@ -154,7 +154,7 @@ export function RecruiterLogin() {
               )}
               <Button
                 type="submit"
-                className="min-w-full bg-[#3c3c3c] p-8 text-lg font-semibold"
+                className="min-w-full bg-[#3c3c3c] p-8 text-lg text-white hover:text-[#3c3c3c] font-semibold"
               >
                 Login Now
               </Button>
@@ -167,7 +167,7 @@ export function RecruiterLogin() {
             </Link>
           </p>
         </div>
-        <div className="col-span-5 row-span-8 col-start-5 rounded-lg flex justify-center items-center">
+        <div className="hidden md:flex col-span-5 row-span-8 col-start-5 rounded-lg justify-center items-center">
           <img src={loginSVG} alt="login" className="h-[600px]" />
         </div>
       </div>

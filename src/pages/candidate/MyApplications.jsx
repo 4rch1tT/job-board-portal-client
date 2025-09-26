@@ -105,9 +105,9 @@ const MyApplications = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#b3ee6d] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading your applications...</p>
         </div>
       </div>
@@ -115,12 +115,11 @@ const MyApplications = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b">
+    <div className="min-h-screen">
+      <div className=" border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+            <h1 className="text-2xl font-bold  flex items-center gap-3">
               <FileText className="h-6 w-6 text-[#b3ee6d]" />
               My Applications
             </h1>
@@ -132,7 +131,7 @@ const MyApplications = () => {
         {error && (
           <div className="text-center py-16">
             <XCircle className="mx-auto h-24 w-24 text-red-300" />
-            <h3 className="mt-4 text-xl font-semibold text-gray-900">
+            <h3 className="mt-4 text-xl font-semibold ">
               Error Loading Applications
             </h3>
             <p className="mt-2 text-gray-500">{error}</p>
@@ -145,7 +144,7 @@ const MyApplications = () => {
         {!error && applications.length === 0 ? (
           <div className="text-center py-16">
             <FileText className="mx-auto h-24 w-24 text-gray-300" />
-            <h3 className="mt-4 text-xl font-semibold text-gray-900">
+            <h3 className="mt-4 text-xl font-semibold ">
               No Applications Yet
             </h3>
             <p className="mt-2 text-gray-500 max-w-md mx-auto">
@@ -190,7 +189,7 @@ const MyApplications = () => {
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
-                          <CardTitle className="text-lg font-semibold text-gray-900 mb-1">
+                          <CardTitle className="text-lg font-semibold mb-1">
                             {job.title}
                           </CardTitle>
                           <div className="flex items-center text-sm text-gray-600">

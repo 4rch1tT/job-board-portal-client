@@ -1,5 +1,5 @@
 import { Moon, Sun } from "lucide-react";
-
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -7,9 +7,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { setTheme } from "@/store/slices/themeSlice";
 
 export default function ThemeToggle() {
- 
+  const dispatch = useDispatch();
+  const currentTheme = useSelector((state) => {
+    console.log("Full Redux state:", state);
+    console.log("Theme state:", state.theme);
+    return state.theme?.theme;
+  });
+
+  console.log("Current theme in component:", currentTheme);
+
+  const handleThemeChange = (newTheme) => {
+    console.log("Theme toggle clicked:", newTheme);
+    dispatch(setTheme(newTheme));
+  };
 
   return (
     <DropdownMenu>
@@ -21,13 +34,22 @@ export default function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleThemeChange("light")}
+          className={currentTheme === "light" ? "bg-accent" : ""}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleThemeChange("dark")}
+          className={currentTheme === "dark" ? "bg-accent" : ""}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleThemeChange("system")}
+          className={currentTheme === "system" ? "bg-accent" : ""}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

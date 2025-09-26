@@ -15,10 +15,10 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.isAuthenticated);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-muted">
+    <div className="min-h-screen flex justify-center items-center ">
       <Card className="w-[310px]">
         <CardHeader>
           <div className="flex flex-col gap-4 items-center justify-center space-x-4">
@@ -41,7 +41,12 @@ const Profile = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full tracking-tight" onClick={()=>navigate("/update-profile")}>Edit Profile</Button>
+          <Button
+            className="w-full tracking-tight"
+            onClick={() => navigate("/update-profile")}
+          >
+            Edit Profile
+          </Button>
         </CardFooter>
       </Card>
     </div>

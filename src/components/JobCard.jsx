@@ -72,7 +72,6 @@ const JobCard = ({
     );
   };
 
-
   const handleWishlist = (e) => {
     e.stopPropagation();
     onToggleWishlist?.(job._id || job.id);
@@ -85,13 +84,13 @@ const JobCard = ({
   return (
     <>
       <Card
-        className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-0 shadow-sm hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50/30 ${className}`}
+        className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-0 shadow-sm hover:-translate-y-1  ${className}`}
         onClick={handleViewDetails}
       >
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3 flex-1 min-w-0">
-              <Avatar className="h-12 w-12 ring-2 ring-gray-100">
+              <Avatar className="h-12 w-12  ">
                 <AvatarImage
                   src={job.company?.logoUrl.url}
                   alt={job.company?.name || "Company"}
@@ -103,7 +102,7 @@ const JobCard = ({
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-1 group-hover:text-[#6d982b] transition-colors">
+                <CardTitle className="text-lg font-semibold  line-clamp-1 group-hover:text-[#6d982b] transition-colors">
                   {job.title}
                 </CardTitle>
                 <CardDescription className="flex items-center text-sm text-gray-600 mt-1">
@@ -198,7 +197,7 @@ const JobCard = ({
           </div>
         </CardContent>
 
-        <CardFooter className="pt-4 border-t bg-gray-50/50">
+        <CardFooter className="pt-4 border-t">
           <div className="flex items-center  w-full gap-3">
             <Button
               variant="outline"

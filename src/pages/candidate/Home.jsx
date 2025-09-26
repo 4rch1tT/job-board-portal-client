@@ -28,14 +28,15 @@ import {
   Clock,
 } from "lucide-react";
 import companies from "@/data/companies";
-import JobCard from "@/components/JobCard";
 import Autoplay from "embla-carousel-autoplay";
 import teamwork from "@/assets/images/teamwork.svg";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
@@ -91,7 +92,7 @@ const Home = () => {
   const StatIcon = currentStat.icon;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen ">
       <div className="pt-20 pb-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <div className="mb-8">
@@ -118,12 +119,12 @@ const Home = () => {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 items-center bg-white shadow-lg border-0 md:border md:rounded-full px-3 py-1.5">
+            <div className="flex flex-col md:flex-row gap-4 items-center bg-white shadow-lg border-0 rounded-2xl md:border md:rounded-full px-3 py-4 md:py-1.5">
               <div className="flex items-center flex-1 bg-gray-50 rounded-lg px-4 py-3">
                 <Search className="h-5 w-5 text-gray-400 mr-3" />
                 <Input
                   placeholder="Job title, skills, or company"
-                  className="border-0 bg-transparent focus-visible:ring-0 text-lg"
+                  className="border-0 bg-transparent focus-visible:ring-0 text-black text-lg"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -132,14 +133,14 @@ const Home = () => {
                 <MapPin className="h-5 w-5 text-gray-400 mr-3" />
                 <Input
                   placeholder="City or remote"
-                  className="border-0 bg-transparent focus-visible:ring-0 text-lg"
+                  className="border-0 bg-transparent focus-visible:ring-0 text-black text-lg"
                   value={locationQuery}
                   onChange={(e) => setLocationQuery(e.target.value)}
                 />
               </div>
               <Button
                 onClick={handleSearch}
-                className="bg-gradient-to-r from-[#b3ee6d] to-[#b3ee2d] hover:from-[#b3ee4d] hover:to-[#b3ee1d] px-6 py-3 text-lg rounded-full shadow-lg transform transition hover:scale-105"
+                className="bg-gradient-to-r from-[#b3ee6d] to-[#b3ee2d] hover:from-[#b3ee4d] hover:to-[#b3ee1d] px-6 py-3 text-lg rounded-full shadow-lg transform transition hover:scale-105 w-full md:w-fit"
               >
                 Search Jobs
               </Button>
@@ -150,7 +151,7 @@ const Home = () => {
       <div className="max-w-6xl mx-auto px-4 space-y-16 mt-8">
         <div className="text-center">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl font-bold mb-4">
               Top companies hiring now
             </h2>
           </div>
@@ -189,12 +190,12 @@ const Home = () => {
             {featuredJobs.map((job) => (
               <Card
                 key={job.id}
-                className="hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white/80 backdrop-blur-sm"
+                className="hover:shadow-xl transition-all duration-300 transform hover:scale-105  backdrop-blur-sm"
               >
                 <CardContent className="pt-4">
                   <div className="flex items-center space-x-3 mb-2">
                     <img
-                      src={job.company.logoUrl}
+                      src={job.company.logoUrl.url}
                       alt={job.company.name}
                       className="h-8 w-8"
                     />
@@ -224,43 +225,48 @@ const Home = () => {
 
           <div className="text-center mt-8">
             <Button
-              variant="outline"
               size="lg"
-              className="border-[#b3ee6d] text-[#b3ee6d] hover:bg-[#b3ee6d] hover:text-white"
+              className="bg-[#b3ee6d] hover:bg-[#b3ee2d]"
               onClick={() => navigate("/jobs")}
             >
               View All Jobs
             </Button>
           </div>
         </div>
-
-        <div className=" bg-gradient-to-r from-[#b3ee2d] to-[#b3ee9d] rounded-2xl p-12 text-white flex justify-between items-center">
-          <div className="flex flex-col">
-            <h2 className="text-3xl font-bold mb-4">
-              Ready to Start Your Journey?
-            </h2>
-            <p className="text-xl mb-8 ">
-              Join thousands of professionals who found their dream jobs
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-2">
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-[#b3ee5d] hover:bg-white hover:text-[#b3ee6d] border-2"
-              >
-                Browse All Jobs
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-[#b3ee2d] hover:bg-[#b3ee6d] hover:text-white"
-              >
-                Create Profile
-              </Button>
+        
+        {!isAuthenticated.value && (
+          <div className=" bg-gradient-to-r from-[#b3ee2d] to-[#b3ee9d] rounded-2xl p-12 text-white flex justify-between items-center">
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-bold mb-4">
+                Ready to Start Your Journey?
+              </h2>
+              <p className="text-xl mb-8 ">
+                Join thousands of professionals who found their dream jobs
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mt-2">
+                <Button
+                  size="lg"
+                  className="bg-[#b3ee5d] hover:bg-white hover:text-[#b3ee6d] border-2"
+                  onClick={() => navigate("/jobs")}
+                >
+                  Browse All Jobs
+                </Button>
+                <Button
+                  size="lg"
+                  className="text-[#b3ee2d] hover:bg-[#b3ee6d] hover:text-white hover:border-2 hover:border-white"
+                  onClick={() => navigate("/register")}
+                >
+                  Create Profile
+                </Button>
+              </div>
             </div>
+            <img
+              src={teamwork}
+              alt="teamwork"
+              className="w-64 hidden md:block"
+            />
           </div>
-          <img src={teamwork} alt="teamwork" className="w-64 hidden md:block" />
-        </div>
+        )}
       </div>
       <div className="h-16"></div>
     </div>

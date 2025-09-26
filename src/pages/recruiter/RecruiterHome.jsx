@@ -8,7 +8,7 @@ const RecruiterHome = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="bg-muted min-h-screen flex items-center justify-center px-4">
+      <div className=" min-h-screen flex items-center justify-center px-4">
         <section className="w-full max-w-2xl mx-auto text-center space-y-6 py-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
             Welcome Back,{" "}
@@ -23,8 +23,12 @@ const RecruiterHome = () => {
             Manage your job postings, review applications, and find the right
             talent faster.
           </p>
-           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="w-full sm:w-auto" onClick={() => navigate("/recruiter/post-job")}>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto"
+              onClick={() => navigate("/recruiter/post-job")}
+            >
               Post a Job
             </Button>
             <Button

@@ -18,7 +18,7 @@ const RecruiterProfile = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-muted">
+    <div className="min-h-screen flex justify-center items-center ">
       <Card className="w-[310px]">
         <CardHeader>
           <div className="flex flex-col gap-4 items-center justify-center space-x-4">

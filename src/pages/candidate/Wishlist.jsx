@@ -112,9 +112,9 @@ const Wishlist = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#b3ee6d] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading your wishlist...</p>
         </div>
       </div>
@@ -123,11 +123,11 @@ const Wishlist = () => {
 
   return (
     <div>
-      <div className="bg-white border-b">
+      <div className=" border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+              <h1 className="text-2xl font-bold flex items-center gap-3">
                 <Heart className="h-6 w-6 text-red-500 fill-current" />
                 My Wishlist
               </h1>
@@ -152,7 +152,7 @@ const Wishlist = () => {
         {wishlistJobs.length === 0 ? (
           <div className="text-center py-16">
             <BookmarkX className="mx-auto h-24 w-24 text-gray-300" />
-            <h3 className="mt-4 text-xl font-semibold text-gray-900">
+            <h3 className="mt-4 text-xl font-semibold ">
               Your wishlist is empty
             </h3>
             <p className="mt-2 text-gray-500 max-w-md mx-auto">
@@ -164,14 +164,14 @@ const Wishlist = () => {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {wishlistJobs.map((job) => (
               <JobCard
                 key={job._id}
                 job={job}
                 onApply={handleApply}
                 onViewDetails={handleViewJob}
-                onToggleWishlist={()=>handleRemoveFromWishlist(job._id)}
+                onToggleWishlist={() => handleRemoveFromWishlist(job._id)}
                 isInWishlist={true}
               />
             ))}

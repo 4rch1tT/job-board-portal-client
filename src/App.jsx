@@ -32,7 +32,7 @@ import Jobs from "./pages/candidate/Jobs";
 import JobDetails from "./pages/candidate/JobDetails";
 import Wishlist from "./pages/candidate/Wishlist";
 import MyApplications from "./pages/candidate/MyApplications";
-
+import ThemeInitializer from "./components/ThemeInitializer";
 
 const router = createBrowserRouter([
   {
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "my-applications",
-        element: <MyApplications />
+        element: <MyApplications />,
       },
     ],
   },
@@ -121,9 +121,9 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Dashboard />
-      }
-    ]
+        element: <Dashboard />,
+      },
+    ],
   },
 ]);
 
@@ -131,6 +131,7 @@ function App() {
   useAuthCheck();
   return (
     <>
+      <ThemeInitializer />
       <RouterProvider router={router} />
       <ToastContainer />
     </>

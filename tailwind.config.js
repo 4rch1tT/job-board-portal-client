@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class', 
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,10 +9,10 @@ export default {
     extend: {
       fontFamily: {
         'sans': ['Geist', 'ui-sans-serif', 'system-ui'],
-        'serif': ['Avro', 'ui-serif', 'Georgia'],
-        'heading': ['Avro', 'ui-serif', 'Georgia'],
+        'serif': ['Arvo', 'ui-serif', 'Georgia'],
+        'heading': ['Arvo', 'ui-serif', 'Georgia'],
         'body': ['Geist', 'ui-sans-serif', 'system-ui'],
-        'display': ['Avro', 'ui-serif', 'Georgia'],
+        'display': ['Arvo', 'ui-serif', 'Georgia'],
       }
     },
   },

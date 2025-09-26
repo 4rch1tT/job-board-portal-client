@@ -76,7 +76,7 @@ export function AddCompanyModal({ onClose, onSuccess }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg w-full max-w-md space-y-4 mt-20">
+      <div className="bg-muted p-6 rounded-lg w-full max-w-md space-y-4 mt-20">
         <h3 className="text-lg font-semibold">Add Company</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>

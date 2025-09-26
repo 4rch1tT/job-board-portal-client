@@ -159,7 +159,7 @@ const ViewApplications = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#b3ee6d] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading applications...</p>
@@ -169,20 +169,20 @@ const ViewApplications = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl  mx-auto">
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4 mb-4 sm:mb-0">
+            <div className="flex items-center gap-4 mb-4 sm:mb-0 ">
               <button
                 onClick={() => navigate("/recruiter/manage-jobs")}
-                className="group flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-[#b3ee6d] hover:to-[#b3ee5d] border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl"
+                className="group flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 border-white border-1 rounded-xl"
               >
                 <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 <span>Back to Jobs</span>
               </button>
               <div>
-                <h1 className="text-xl md:text-2xl font-semibold text-gray-900">
+                <h1 className="text-xl md:text-2xl font-semibold">
                   Applications Overview
                 </h1>
                 {jobDetails && (
@@ -197,10 +197,8 @@ const ViewApplications = () => {
         </div>
 
         {jobDetails && (
-          <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              {jobDetails.title}
-            </h2>
+          <div className="bg-muted rounded-xl shadow-md p-6 mb-8">
+            <h2 className="text-lg font-semibold  mb-4">{jobDetails.title}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
@@ -218,7 +216,7 @@ const ViewApplications = () => {
         )}
 
         {applications.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-md">
+          <div className="bg-muted rounded-xl shadow-md">
             <div className="text-center py-16">
               <Users className="mx-auto h-24 w-24 text-gray-300" />
               <h3 className="mt-4 text-lg font-medium text-gray-900">
@@ -230,18 +228,13 @@ const ViewApplications = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+          <div className="bg-muted rounded-xl shadow-md overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Candidate Applications
-              </h3>
+              <h3 className="text-lg font-semibold">Candidate Applications</h3>
             </div>
             <div className="divide-y divide-gray-200">
               {applications.map((application) => (
-                <div
-                  key={application._id}
-                  className="p-6 hover:bg-gray-50 transition-colors"
-                >
+                <div key={application._id} className="p-6 transition-colors">
                   <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="flex-shrink-0">
@@ -263,7 +256,7 @@ const ViewApplications = () => {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <h4 className="font-semibold text-gray-900 text-lg">
+                        <h4 className="font-semibold  text-lg">
                           {application.candidate.name}
                         </h4>
                         <p className="text-gray-600 text-sm">
@@ -309,10 +302,18 @@ const ViewApplications = () => {
                           disabled={updatingStatus === application._id}
                           className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b3ee6d] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          <option value="pending">Pending</option>
-                          <option value="reviewed">Reviewed</option>
-                          <option value="accepted">Accepted</option>
-                          <option value="rejected">Rejected</option>
+                          <option value="pending" className="bg-muted">
+                            Pending
+                          </option>
+                          <option value="reviewed" className="bg-muted">
+                            Reviewed
+                          </option>
+                          <option value="accepted" className="bg-muted">
+                            Accepted
+                          </option>
+                          <option value="rejected" className="bg-muted">
+                            Rejected
+                          </option>
                         </select>
                         {updatingStatus === application._id && (
                           <span className="text-xs text-gray-500 mt-1">

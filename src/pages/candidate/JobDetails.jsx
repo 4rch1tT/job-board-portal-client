@@ -413,9 +413,9 @@ const JobDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#b3ee6d] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading job details...</p>
         </div>
       </div>
@@ -424,10 +424,10 @@ const JobDetails = () => {
 
   if (error || !job) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="mx-auto h-12 w-12 text-red-500" />
-          <h3 className="mt-4 text-lg font-semibold text-gray-900">
+          <h3 className="mt-4 text-lg font-semibold ">
             Job Not Found
           </h3>
           <p className="mt-2 text-gray-500">
@@ -443,8 +443,8 @@ const JobDetails = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b sticky top-0 z-40">
+      <div className="min-h-screen ">
+        <div className=" border-b sticky top-0 z-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <Button
@@ -478,7 +478,7 @@ const JobDetails = () => {
                   <div className="flex items-start gap-4">
                     <Avatar className="h-16 w-16">
                       <AvatarImage
-                        src={job.company?.logoUrl}
+                        src={job.company?.logoUrl.url}
                         alt={job.company?.name}
                       />
                       <AvatarFallback className="bg-gradient-to-br from-[#b3ee6d] to-[rgb(109,152,43)] text-white text-lg font-bold">
@@ -487,7 +487,7 @@ const JobDetails = () => {
                     </Avatar>
 
                     <div className="flex-1">
-                      <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
+                      <CardTitle className="text-2xl font-bold mb-2">
                         {job.title}
                       </CardTitle>
 

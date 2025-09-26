@@ -47,7 +47,7 @@ const Footer = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-800">Company</p>
+              <p className="font-medium">Company</p>
               <p className="text-gray-600 hover:text-[#b3ee6d] cursor-pointer transition-colors">
                 About us
               </p>
@@ -65,7 +65,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-800">Support</p>
+              <p className="font-medium">Support</p>
               <p className="text-gray-600 hover:text-[#b3ee6d] cursor-pointer transition-colors">
                 Help center
               </p>
@@ -80,7 +80,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-800">Legal</p>
+              <p className="font-medium">Legal</p>
               <p className="text-gray-600 hover:text-[#b3ee6d] cursor-pointer transition-colors">
                 Privacy policy
               </p>
@@ -124,7 +124,7 @@ const Footer = () => {
           </div>
           <div className="flex gap-32">
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-800">About us</p>
+              <p className="font-medium ">About us</p>
               <p className="text-gray-600 hover:text-[#b3ee6d] cursor-pointer transition-colors">
                 Careers
               </p>
@@ -139,7 +139,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-800">Help center</p>
+              <p className="font-medium">Help center</p>
               <p className="text-gray-600 hover:text-[#b3ee6d] cursor-pointer transition-colors">
                 Summons/Notices
               </p>
@@ -151,7 +151,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-800">Privacy policy</p>
+              <p className="font-medium">Privacy policy</p>
               <p className="text-gray-600 hover:text-[#b3ee6d] cursor-pointer transition-colors">
                 Terms & conditions
               </p>

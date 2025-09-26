@@ -91,39 +91,44 @@ export function RecruiterRegister() {
   };
 
   return (
-    <div className="grid grid-cols-10 grid-rows-9 gap-8 pt-8 text-[#3c3c3c] bg-muted">
-      <div className="col-span-4 row-span-4 shadow-md flex flex-col ml-24 rounded-lg py-4 ">
-        <img src={recruiterRegisterSVG} alt="register" className="h-60 w-full" />
-        <div className="tracking-tight flex flex-col justify-center items-center">
-          <p className="text-center text-3xl mb-4 font-semibold">
+    <div className="flex flex-col lg:flex-row gap-8 pt-8 px-4 lg:px-0">
+      <div className="hidden lg:flex lg:w-2/5 xl:w-1/3 shadow-md h-[500px] flex-col ml-0 lg:ml-24 rounded-lg py-6 bg-muted">
+        <img
+          src={recruiterRegisterSVG}
+          alt="register"
+          className="h-60 w-full object-contain"
+        />
+        <div className="tracking-tight flex flex-col justify-center items-center px-4">
+          <p className="text-center text-2xl lg:text-3xl mb-4 font-semibold">
             On registering, you can
           </p>
-          <div className="">
-            <div className="flex items-center mb-1.5 text-xl">
-              <CheckCircle2 fill="#b3ee6d" className=" text-white" />
+          <div>
+            <div className="flex items-center mb-1.5 text-lg lg:text-xl">
+              <CheckCircle2 fill="#b3ee6d" className="text-gray-600 mr-2" />
               <p>Add jobs</p>
             </div>
-            <div className="flex items-center mb-1.5 text-xl">
-              <CheckCircle2 fill="#b3ee6d" className=" text-white" />
+            <div className="flex items-center mb-1.5 text-lg lg:text-xl">
+              <CheckCircle2 fill="#b3ee6d" className="text-gray-600 mr-2" />
               <p>Monitor jobs</p>
             </div>
-            <div className="flex items-center mb-2 text-xl">
-              <CheckCircle2 fill="#b3ee6d" className=" text-white" />
+            <div className="flex items-center mb-2 text-lg lg:text-xl">
+              <CheckCircle2 fill="#b3ee6d" className="text-gray-600 mr-2" />
               <p>Find the right candidates</p>
             </div>
           </div>
         </div>
       </div>
-      <div className="col-span-8 row-span-7 col-start-5 shadow-md  p-16 mr-24 rounded-lg">
-        <div className="mb-8 tracking-tight">
-          <h2 className="text-3xl font-bold">
+
+      <div className="w-full lg:w-3/5 xl:w-2/3 shadow-md bg-muted p-6 lg:p-16 lg:mr-24 rounded-lg">
+        <div className="mb-8 tracking-tight text-center lg:text-left">
+          <h2 className="text-2xl lg:text-3xl font-bold">
             Find & hire the right talent with us
           </h2>
         </div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 h-auto tracking-tight "
+            className="space-y-6 lg:space-y-8 tracking-tight"
           >
             <FormField
               control={form.control}
@@ -137,14 +142,14 @@ export function RecruiterRegister() {
                     <Input
                       placeholder="What is your name?"
                       {...field}
-                      className="w-full mt-3 text-md lg:text-lg"
+                      className="w-full mt-2 text-md lg:text-lg"
                     />
                   </FormControl>
-                  <FormDescription className="text-md lg:text-lg"></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="email"
@@ -155,14 +160,14 @@ export function RecruiterRegister() {
                     <Input
                       placeholder="Tell us your Email ID"
                       {...field}
-                      className="w-full mt-3 text-md lg:text-lg"
+                      className="w-full mt-2 text-md lg:text-lg"
                     />
                   </FormControl>
-                  <FormDescription className="text-md lg:text-lg"></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="password"
@@ -173,15 +178,15 @@ export function RecruiterRegister() {
                     <Input
                       placeholder="(Minimum 8 characters)"
                       {...field}
-                      className="w-full mt-3 text-md lg:text-lg"
                       type="password"
+                      className="w-full mt-2 text-md lg:text-lg"
                     />
                   </FormControl>
-                  <FormDescription className="text-md lg:text-lg"></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="confirmPassword"
@@ -194,16 +199,16 @@ export function RecruiterRegister() {
                     <Input
                       placeholder="Retype the password"
                       {...field}
-                      className="w-full mt-3 text-md lg:text-lg"
                       type="password"
+                      className="w-full mt-2 text-md lg:text-lg"
                     />
                   </FormControl>
-                  <FormDescription></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="py-5 bg-[#3c3c3c]">
+
+            <Button type="submit" className="py-5 w-full lg:w-auto">
               Register now
             </Button>
           </form>

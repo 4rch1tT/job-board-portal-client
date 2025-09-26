@@ -135,7 +135,7 @@ const RecruiterUpdateProfile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-muted tracking-tight py-6">
+    <div className="flex flex-col items-center justify-center min-h-screen tracking-tight py-6">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl">Edit Profile</CardTitle>

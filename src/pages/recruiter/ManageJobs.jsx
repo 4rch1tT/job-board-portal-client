@@ -166,13 +166,13 @@ const ManageJobs = () => {
                 <div className="text-sm text-gray-500">Loading...</div>
               )}
             </div>
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
+            <div className="backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
               {filteredJobs.length === 0 && !isLoading ? (
                 <div className="text-center py-12">
-                  <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4">
                     <Search className="w-10 h-10 text-gray-400" />
                   </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <h3 className="text-lg font-medium  mb-2">
                     {searchTerm ? "No jobs match your search" : "No jobs found"}
                   </h3>
                   <p className="text-gray-500 mb-4">
@@ -191,7 +191,7 @@ const ManageJobs = () => {
                 <>
                   <div className="hidden lg:block overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200 ">
-                      <thead className="bg-gradient-to-r from-gray-50 to-gray-100/50">
+                      <thead className="">
                         <tr>
                           <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Job Details
@@ -210,15 +210,15 @@ const ManageJobs = () => {
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className=" divide-y divide-gray-200">
                         {filteredJobs.map((job) => (
                           <tr
                             key={job._id}
-                            className="hover:bg-gray-50 transition-colors duration-200"
+                            className="hover:bg-gray-50 hover:text-gray-900 transition-colors duration-200"
                           >
                             <td className="px-6 py-4">
                               <div className="flex flex-col">
-                                <div className="text-sm font-semibold text-gray-900 mb-1">
+                                <div className="text-sm font-semibold mb-1 ">
                                   {job.title}
                                 </div>
                                 <div className="text-xs text-gray-500 mb-2">
