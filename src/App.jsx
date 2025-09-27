@@ -33,6 +33,7 @@ import JobDetails from "./pages/candidate/JobDetails";
 import Wishlist from "./pages/candidate/Wishlist";
 import MyApplications from "./pages/candidate/MyApplications";
 import ThemeInitializer from "./components/ThemeInitializer";
+import UserManagement from "./pages/admin/UserManagement";
 
 const router = createBrowserRouter([
   {
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Dashboard />,
+      },
+      {
+        path: "manage-user",
+        element: <UserManagement />,
       },
     ],
   },

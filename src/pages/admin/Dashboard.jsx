@@ -274,7 +274,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
+      <div className="min-h-screen p-6 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-[#b3ee6d]" />
           <p className="text-gray-600">Loading dashboard...</p>
@@ -389,7 +389,7 @@ const Dashboard = () => {
                   <CardDescription>Common administrative tasks</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button className="w-full justify-start" variant="outline" onClick={()=>navigate("/admin/manage-user")}>
                     <Users className="mr-2 h-4 w-4" />
                     Manage Users
                   </Button>

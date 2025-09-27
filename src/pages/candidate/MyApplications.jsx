@@ -179,7 +179,7 @@ const MyApplications = () => {
                       <div className="flex items-center space-x-3 flex-1">
                         <Avatar className="h-12 w-12">
                           <AvatarImage
-                            src={job.company?.logoUrl}
+                            src={job.company?.logoUrl.url}
                             alt={job.company?.name || "Company"}
                           />
                           <AvatarFallback className="bg-gradient-to-br from-[#b3ee6d] to-[#b3ee5d] text-white font-semibold">

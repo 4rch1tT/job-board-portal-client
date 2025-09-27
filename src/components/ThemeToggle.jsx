@@ -12,15 +12,11 @@ import { setTheme } from "@/store/slices/themeSlice";
 export default function ThemeToggle() {
   const dispatch = useDispatch();
   const currentTheme = useSelector((state) => {
-    console.log("Full Redux state:", state);
-    console.log("Theme state:", state.theme);
     return state.theme?.theme;
   });
 
-  console.log("Current theme in component:", currentTheme);
 
   const handleThemeChange = (newTheme) => {
-    console.log("Theme toggle clicked:", newTheme);
     dispatch(setTheme(newTheme));
   };
 

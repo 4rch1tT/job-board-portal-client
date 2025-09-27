@@ -26,7 +26,6 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     if (isOpen && jobId) {
       fetchJobDetails();
@@ -128,8 +127,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[100vh] overflow-hidden">
-        {/* Header */}
+      <div className="bg-muted rounded-lg shadow-xl max-w-4xl w-full max-h-[100vh] overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b">
           <div>
             <h2 className="text-xl font-semibold flex items-center gap-2">
@@ -148,7 +146,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+              <Loader2 className="h-8 w-8 animate-spin text-[#b3ee6d]" />
               <span className="ml-3">Loading job details...</span>
             </div>
           ) : error ? (
@@ -160,9 +158,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
             <div className="space-y-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {job.title}
-                  </h2>
+                  <h2 className="text-2xl font-bold">{job.title}</h2>
                   <div className="flex items-center gap-4 mt-2 text-gray-600">
                     <div className="flex items-center gap-1">
                       <Building2 className="h-4 w-4" />
@@ -180,7 +176,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
                 </div>
                 <div className="flex flex-col items-end gap-2">
                   {getJobStatusBadge(job)}
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-400">
                     Posted: {formatDate(job.createdAt)}
                   </span>
                 </div>
@@ -191,15 +187,15 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
                       <DollarSign className="h-4 w-4" />
                       Salary
                     </h3>
-                    <p className="text-gray-700">{formatSalary(job.salary)}</p>
+                    <p className="text-gray-500">{formatSalary(job.salary)}</p>
                   </div>
 
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
                       <User className="h-4 w-4" />
                       Posted By
                     </h3>
@@ -212,10 +208,10 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
                         />
                       )}
                       <div>
-                        <p className="text-gray-700">
+                        <p className="text-gray-500">
                           {job.postedBy?.name || "Unknown"}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-400">
                           {job.postedBy?.email}
                         </p>
                       </div>
@@ -224,18 +220,14 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
 
                   {job.category && (
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
-                        Category
-                      </h3>
+                      <h3 className="font-semibold mb-2">Category</h3>
                       <Badge variant="outline">{job.category}</Badge>
                     </div>
                   )}
 
                   {job.skills && job.skills.length > 0 && (
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
-                        Skills Required
-                      </h3>
+                      <h3 className="font-semibold mb-2">Skills Required</h3>
                       <div className="flex flex-wrap gap-2">
                         {job.skills.map((skill, index) => (
                           <Badge key={index} variant="secondary">
@@ -250,7 +242,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
                 <div className="space-y-4">
                   {job.company && (
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <h3 className="font-semibold mb-2 flex items-center gap-2">
                         <Building2 className="h-4 w-4" />
                         Company Details
                       </h3>
@@ -263,10 +255,10 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
                           />
                         )}
                         <div>
-                          <p className="text-gray-700 font-medium">
+                          <p className="text-gray-500 font-medium">
                             {job.company.name}
                           </p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-gray-400">
                             {job.company.verified
                               ? "Verified Company"
                               : "Unverified Company"}
@@ -277,7 +269,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
                   )}
 
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <h3 className="font-semibold  mb-2 flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
                       Timeline
                     </h3>
@@ -304,11 +296,9 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
               <hr className="border-gray-200" />
 
               <div>
-                <h3 className="font-semibold text-gray-900 mb-3">
-                  Job Description
-                </h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                <h3 className="font-semibold  mb-3">Job Description</h3>
+                <div className=" p-4 rounded-lg">
+                  <p className="text-gray-500 whitespace-pre-wrap leading-relaxed">
                     {job.description}
                   </p>
                 </div>
@@ -316,11 +306,9 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
 
               {job.requirements && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">
-                    Requirements
-                  </h3>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  <h3 className="font-semibold mb-3">Requirements</h3>
+                  <div className=" p-4 rounded-lg">
+                    <p className="text-gray-500 whitespace-pre-wrap leading-relaxed">
                       {job.requirements}
                     </p>
                   </div>
@@ -337,7 +325,7 @@ const JobReviewModal = ({ isOpen, onClose, jobId, onJobAction }) => {
           ) : null}
         </div>
 
-        <div className="border-t p-6 bg-gray-50">
+        <div className="border-t p-6">
           <div className="flex justify-between">
             <Button variant="outline" onClick={onClose}>
               Close

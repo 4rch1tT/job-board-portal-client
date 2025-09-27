@@ -186,7 +186,7 @@ const Navbar = () => {
                   Login
                 </Button>
                 <Button
-                  className="rounded-2xl bg-[#3c3c3c] text-white text-xs sm:text-sm px-3 sm:px-4"
+                  className="rounded-2xl text-xs sm:text-sm px-3 sm:px-4"
                   onClick={() => navigate("/register")}
                 >
                   Register
