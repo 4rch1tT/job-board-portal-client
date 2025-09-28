@@ -149,7 +149,6 @@ const Dashboard = () => {
 
       await fetchStats();
 
-      // Show success message
       console.log(`Job ${action}d successfully`);
     } catch (error) {
       console.error(`Error ${action}ing job:`, error);

@@ -72,6 +72,7 @@ const UserManagement = () => {
         recruiters: usersData.filter((u) => u.role === "recruiter").length,
         admins: usersData.filter((u) => u.role === "admin").length,
         active: usersData.filter((u) => !u.isDeleted).length,
+        suspended: usersData.filter((u) => u.isSuspended).length,
       };
       setStats(statsData);
     } catch (error) {
@@ -298,10 +299,18 @@ const UserManagement = () => {
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value)}
               >
-                <option value="all">All Roles</option>
-                <option value="candidate">Candidates</option>
-                <option value="recruiter">Recruiters</option>
-                <option value="admin">Admins</option>
+                <option value="all" className="bg-muted">
+                  All Roles
+                </option>
+                <option value="candidate" className="bg-muted">
+                  Candidates
+                </option>
+                <option value="recruiter" className="bg-muted">
+                  Recruiters
+                </option>
+                <option value="admin" className="bg-muted">
+                  Admins
+                </option>
               </select>
 
               <select
@@ -309,10 +318,18 @@ const UserManagement = () => {
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
               >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="suspended">Suspended</option>
-                <option value="deleted">Deleted</option>
+                <option value="all" className="bg-muted">
+                  All Status
+                </option>
+                <option value="active" className="bg-muted">
+                  Active
+                </option>
+                <option value="suspended" className="bg-muted">
+                  Suspended
+                </option>
+                <option value="deleted" className="bg-muted">
+                  Deleted
+                </option>
               </select>
             </div>
           </CardContent>
