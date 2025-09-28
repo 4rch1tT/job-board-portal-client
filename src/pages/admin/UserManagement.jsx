@@ -120,24 +120,23 @@ const UserManagement = () => {
     fetchUsers();
   }, []);
 
-  const handleUserAction = async (userId, action) => {
-    setActionLoading(prev => ({ ...prev, [userId]: action }));
+  const handleUserAction = async (id, action) => {
+    setActionLoading((prev) => ({ ...prev, [id]: action }));
     setError(null);
 
     try {
       await axios.put(
-        `${api_domain}/api/admin/${userId}/${action}`,
+        `${api_domain}/api/admin/${id}/${action}`,
         {},
         { withCredentials: true }
       );
 
       await fetchUsers();
-      
     } catch (error) {
       console.error(`Error ${action}ing user:`, error);
       setError(`Failed to ${action} user`);
     } finally {
-      setActionLoading(prev => ({ ...prev, [userId]: null }));
+      setActionLoading((prev) => ({ ...prev, [id]: null }));
     }
   };
 
@@ -362,9 +361,7 @@ const UserManagement = () => {
               {filteredUsers.length === 0 ? (
                 <div className="text-center py-12">
                   <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    No users found
-                  </h3>
+                  <h3 className="text-lg font-medium mb-2">No users found</h3>
                   <p className="text-gray-500">
                     {searchQuery ||
                     selectedRole !== "all" ||
@@ -378,7 +375,7 @@ const UserManagement = () => {
                   {filteredUsers.map((user) => (
                     <div
                       key={user._id}
-                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
                     >
                       <div className="flex items-center space-x-4">
                         <div className="relative">
