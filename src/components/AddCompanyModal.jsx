@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { jobCategories } from "@/constants/jobEnums";
 
 export function AddCompanyModal({ onClose, onSuccess }) {
   const {
@@ -133,10 +134,23 @@ export function AddCompanyModal({ onClose, onSuccess }) {
 
           <div>
             <Label className="mb-2">Industry</Label>
-            <Input
+            <select
               {...register("industry", { required: "Industry is required" })}
               placeholder="Technology"
-            />
+            >
+              <option value="all" className="bg-muted">
+                All Categories
+              </option>
+              {jobCategories.map((category) => (
+                <option
+                  key={category.value}
+                  value={category.value}
+                  className="bg-muted"
+                >
+                  {category.label}
+                </option>
+              ))}
+            </select>
             {errors.industry && (
               <p className="text-red-500 text-sm">{errors.industry.message}</p>
             )}

@@ -35,6 +35,7 @@ import MyApplications from "./pages/candidate/MyApplications";
 import ThemeInitializer from "./components/ThemeInitializer";
 import UserManagement from "./pages/admin/UserManagement";
 import JobManagement from "./pages/admin/JobManagement";
+import CompanyManagement from "./pages/admin/CompanyManagement";
 
 const router = createBrowserRouter([
   {
@@ -131,8 +132,12 @@ const router = createBrowserRouter([
       },
       {
         path: "manage-job",
-        element: <JobManagement/>
-      }
+        element: <JobManagement />,
+      },
+      {
+        path: "manage-company",
+        element: <CompanyManagement />,
+      },
     ],
   },
 ]);

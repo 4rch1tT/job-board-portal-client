@@ -388,15 +388,27 @@ const Dashboard = () => {
                   <CardDescription>Common administrative tasks</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Button className="w-full justify-start" variant="outline" onClick={()=>navigate("/admin/manage-user")}>
+                  <Button
+                    className="w-full justify-start"
+                    variant="outline"
+                    onClick={() => navigate("/admin/manage-user")}
+                  >
                     <Users className="mr-2 h-4 w-4" />
                     Manage Users
                   </Button>
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button
+                    className="w-full justify-start"
+                    variant="outline"
+                    onClick={() => navigate("/admin/manage-company")}
+                  >
                     <Building2 className="mr-2 h-4 w-4" />
                     Manage Companies
                   </Button>
-                  <Button className="w-full justify-start" variant="outline">
+                  <Button
+                    className="w-full justify-start"
+                    variant="outline"
+                    onClick={() => navigate("/admin/manage-job")}
+                  >
                     <Briefcase className="mr-2 h-4 w-4" />
                     Manage Jobs
                   </Button>

@@ -316,7 +316,7 @@ const JobManagement = () => {
 
         {error && (
           <Alert variant="destructive" className="mb-6">
-            <AlertCircle className="h-4 w-4" />
+            <AlertCircle className="h-5 w-5 text-red-400" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
