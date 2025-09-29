@@ -458,7 +458,7 @@ const UserManagement = () => {
                             </Button>
                           )}
 
-                        {user.isSuspended && (
+                        {/* {user.isSuspended && (
                           <Button
                             size="sm"
                             className="bg-green-600 hover:bg-green-700"
@@ -474,7 +474,7 @@ const UserManagement = () => {
                             )}
                             Reactivate
                           </Button>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   ))}

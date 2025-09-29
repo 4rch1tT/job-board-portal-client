@@ -21,6 +21,7 @@ import {
   UserRoundPlus,
   Menu,
   X,
+  LayoutDashboard,
 } from "lucide-react";
 import axios from "axios";
 import logo from "@/assets/images/seeker-logo.svg";
@@ -117,9 +118,11 @@ const Navbar = () => {
                   {isAdmin ? (
                     <>
                       <DropdownMenuItem onClick={() => navigate("/admin")}>
-                        <UserRound /> Admin Dashboard
+                        <LayoutDashboard/>  Dashboard
                       </DropdownMenuItem>
-                      {/* Add more admin links here if needed */}
+                      <DropdownMenuItem onClick={() => navigate("/admin/profile")}>
+                        <UserRound />  Profile
+                      </DropdownMenuItem>
                     </>
                   ) : isRecruiter ? (
                     <>

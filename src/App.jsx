@@ -36,6 +36,8 @@ import ThemeInitializer from "./components/ThemeInitializer";
 import UserManagement from "./pages/admin/UserManagement";
 import JobManagement from "./pages/admin/JobManagement";
 import CompanyManagement from "./pages/admin/CompanyManagement";
+import AdminProfile from "./pages/admin/AdminProfile";
+import AdminUpdateProfile from "./pages/admin/AdminUpdateProfile";
 
 const router = createBrowserRouter([
   {
@@ -137,6 +139,14 @@ const router = createBrowserRouter([
       {
         path: "manage-company",
         element: <CompanyManagement />,
+      },
+      {
+        path: "profile",
+        element: <AdminProfile />,
+      },
+      {
+        path: "update-profile",
+        element: <AdminUpdateProfile />,
       },
     ],
   },
