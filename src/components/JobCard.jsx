@@ -90,10 +90,11 @@ const JobCard = ({
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3 flex-1 min-w-0">
-              <Avatar className="h-12 w-12  ">
+              <Avatar className="h-12 w-12">
                 <AvatarImage
                   src={job.company?.logoUrl.url}
                   alt={job.company?.name || "Company"}
+                  className="object-contain"
                 />
                 <AvatarFallback className="bg-gradient-to-br from-[#b3ee6d] to-[rgb(109,152,43)] text-white font-semibold">
                   {(job.company?.name || job.company || "C")
