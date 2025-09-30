@@ -18,7 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import recruiterRegisterSVG from "@/assets/images/recruiter-register.svg";
+import recruiterRegisterDarkSVG from "@/assets/images/recruiter-register-dark.svg";
 import { CheckCircle2 } from "lucide-react";
+import useIsDarkMode from "@/hooks/useIsDarkMode";
 
 const formSchema = z
   .object({
@@ -69,6 +71,7 @@ export function RecruiterRegister() {
   const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isDarkMode = useIsDarkMode();
 
   const onSubmit = async (values) => {
     try {
@@ -94,7 +97,7 @@ export function RecruiterRegister() {
     <div className="flex flex-col lg:flex-row gap-8 pt-8 px-4 lg:px-0">
       <div className="hidden lg:flex lg:w-2/5 xl:w-1/3 shadow-md h-[500px] flex-col ml-0 lg:ml-24 rounded-lg py-6 bg-muted">
         <img
-          src={recruiterRegisterSVG}
+          src={isDarkMode ? recruiterRegisterDarkSVG : recruiterRegisterSVG}
           alt="register"
           className="h-60 w-full object-contain"
         />

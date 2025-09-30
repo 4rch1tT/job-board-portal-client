@@ -118,10 +118,12 @@ const Navbar = () => {
                   {isAdmin ? (
                     <>
                       <DropdownMenuItem onClick={() => navigate("/admin")}>
-                        <LayoutDashboard/>  Dashboard
+                        <LayoutDashboard /> Dashboard
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate("/admin/profile")}>
-                        <UserRound />  Profile
+                      <DropdownMenuItem
+                        onClick={() => navigate("/admin/profile")}
+                      >
+                        <UserRound /> Profile
                       </DropdownMenuItem>
                     </>
                   ) : isRecruiter ? (
@@ -195,6 +197,7 @@ const Navbar = () => {
                   Register
                 </Button>
               </div>
+              <div className="h-5 w-0.5 bg-gray-400"></div>
               <Link
                 to="/recruiter/login"
                 className="-tracking-tight text-xs sm:text-sm hover:text-[#b3ee6d] transition-colors"
@@ -250,9 +253,13 @@ const Navbar = () => {
                   {isAdmin ? (
                     <>
                       <DropdownMenuItem onClick={() => navigate("/admin")}>
-                        <UserRound /> Admin Dashboard
+                        <LayoutDashboard /> Admin Dashboard
                       </DropdownMenuItem>
-                      {/* Add more admin links here if needed */}
+                      <DropdownMenuItem
+                        onClick={() => navigate("/admin/profile")}
+                      >
+                        <UserRound /> Profile
+                      </DropdownMenuItem>
                     </>
                   ) : isRecruiter ? (
                     <>

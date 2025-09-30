@@ -4,7 +4,6 @@ import { z } from "zod";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { login } from "@/store/slices/authSlice";
 import loginSVG from "@/assets/images/team-brainstorming.svg";
+import loginSVGDark from "@/assets/images/team-brainstorming-dark.svg";
+import useIsDarkMode from "@/hooks/useIsDarkMode";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -46,6 +47,7 @@ const formSchema = z.object({
 });
 
 export function Login() {
+  const isDarkMode = useIsDarkMode();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -172,7 +174,11 @@ export function Login() {
           </p>
         </div>
         <div className="hidden md:flex col-span-5 row-span-8 col-start-5 rounded-lg justify-center items-center">
-          <img src={loginSVG} alt="login" className="h-[600px]" />
+          <img
+            src={isDarkMode ? loginSVGDark : loginSVG}
+            alt="login"
+            className="h-[600px]"
+          />
         </div>
       </div>
     </div>

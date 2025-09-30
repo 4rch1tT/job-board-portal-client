@@ -38,8 +38,13 @@ import JobManagement from "./pages/admin/JobManagement";
 import CompanyManagement from "./pages/admin/CompanyManagement";
 import AdminProfile from "./pages/admin/AdminProfile";
 import AdminUpdateProfile from "./pages/admin/AdminUpdateProfile";
+import NotFound from "./pages/candidate/NotFound";
 
 const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <NotFound />
+  },
   {
     path: "/",
     element: <CandidateLayout />,

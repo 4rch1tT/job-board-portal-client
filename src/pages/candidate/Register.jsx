@@ -18,7 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import registerSVG from "@/assets/images/register.svg";
+import registerDarkSVG from "@/assets/images/register-dark.svg";
 import { CheckCircle2 } from "lucide-react";
+import useIsDarkMode from "@/hooks/useIsDarkMode";
 
 const formSchema = z
   .object({
@@ -69,6 +71,7 @@ export function Register() {
   const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isDarkMode = useIsDarkMode();
 
   const onSubmit = async (values) => {
     try {
@@ -93,7 +96,11 @@ export function Register() {
   return (
     <div className="flex flex-col lg:flex-row gap-8 pt-8 px-4 lg:px-0">
       <div className="hidden lg:flex lg:w-2/5 xl:w-1/3 shadow-md h-[500px] flex-col ml-0 lg:ml-24 rounded-lg py-6 bg-muted">
-        <img src={registerSVG} alt="register" className="h-60 w-full object-contain" />
+        <img
+          src={isDarkMode ? registerDarkSVG : registerSVG}
+          alt="register"
+          className="h-60 w-full object-contain"
+        />
         <div className="tracking-tight flex flex-col justify-center items-center px-4">
           <p className="text-center text-2xl lg:text-3xl mb-4 font-semibold">
             On registering, you can
@@ -116,7 +123,9 @@ export function Register() {
       </div>
       <div className="w-full lg:w-3/5 xl:w-2/3 shadow-md bg-muted p-6 lg:p-16 lg:mr-24 rounded-lg">
         <div className="mb-8 tracking-tight text-center lg:text-left">
-          <h2 className="text-2xl lg:text-3xl font-bold">Create your Seeker profile</h2>
+          <h2 className="text-2xl lg:text-3xl font-bold">
+            Create your Seeker profile
+          </h2>
           <p className="text-2xl text-gray-400">For seekers from 'Seeker'</p>
         </div>
         <Form {...form}>

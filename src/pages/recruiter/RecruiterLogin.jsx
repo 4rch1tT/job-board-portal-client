@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { login } from "@/store/slices/authSlice";
 import loginSVG from "@/assets/images/searching.svg";
+import loginDarkSVG from "@/assets/images/searching-dark.svg";
+import useIsDarkMode from "@/hooks/useIsDarkMode";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -57,6 +59,7 @@ export function RecruiterLogin() {
   const api_domain = import.meta.env.VITE_API_DOMAIN;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isDarkMode = useIsDarkMode();
 
   const onSubmit = async (values) => {
     try {
@@ -168,7 +171,11 @@ export function RecruiterLogin() {
           </p>
         </div>
         <div className="hidden md:flex col-span-5 row-span-8 col-start-5 rounded-lg justify-center items-center">
-          <img src={loginSVG} alt="login" className="h-[600px]" />
+          <img
+            src={isDarkMode ? loginDarkSVG : loginSVG}
+            alt="login"
+            className="h-[600px]"
+          />
         </div>
       </div>
     </div>
