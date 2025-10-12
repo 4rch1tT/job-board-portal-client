@@ -159,7 +159,7 @@ const Jobs = () => {
       };
 
       Object.keys(params).forEach((key) => {
-        if (!params[key]) delete params[key];
+        if (!params[key] && params[key] !== 0) delete params[key];
       });
 
       const response = await axios.get(`${api_domain}/api/job/all`, {
